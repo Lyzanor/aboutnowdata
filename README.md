@@ -1,11 +1,11 @@
-# About / Data / Now
+# About Now Data
 
-Static single-file site for the About / Data / Now framework.
+Static single-file site for the About Now Data framework.
 
 ## Structure
 
 - `index.html`: the whole site. HTML, CSS, JS, and the client-side `.zip` download all live here.
-- `learn.html`: explanation page for the About / Data / Now system.
+- `learn.html`: explanation page for the About Now Data system.
 - `LICENSE`: repository license.
 
 ## Update Guide
