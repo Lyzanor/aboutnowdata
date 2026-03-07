@@ -351,6 +351,24 @@
         min-height: 24rem;
       }
 
+      .card__line {
+        display: block;
+      }
+
+      .card__line--h2 {
+        margin: 0.7rem 0 0.2rem;
+        padding-top: 0.7rem;
+        border-top: 1px solid rgba(5, 5, 5, 0.12);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .card__line--blank {
+        min-height: 0.9rem;
+      }
+
       .card__content[contenteditable="true"] {
         outline: none;
       }
@@ -850,9 +868,66 @@ Opportunities:
       let cards = [];
       let stackTabs = [];
       let editableContent = [];
+      let editingCardKey = null;
 
       function getCardContent(cardName) {
-        return document.getElementById(cardName + "-content").textContent;
+        const content = document.getElementById(cardName + "-content");
+        return content.dataset.raw ?? content.textContent;
+      }
+
+      function escapeHtml(value) {
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function renderMarkdownPreview(raw) {
+        return raw
+          .split("\n")
+          .map((line) => {
+            if (!line) {
+              return '<span class="card__line card__line--blank"></span>';
+            }
+
+            if (line.startsWith("## ")) {
+              return '<span class="card__line card__line--h2">' + escapeHtml(line.slice(3)) + '</span>';
+            }
+
+            return '<span class="card__line">' + escapeHtml(line) + '</span>';
+          })
+          .join("");
+      }
+
+      function setContentMode(content, editable) {
+        const raw = content.dataset.raw ?? content.textContent;
+        content.dataset.raw = raw;
+
+        if (editable) {
+          content.textContent = raw;
+          content.setAttribute("contenteditable", "true");
+          return;
+        }
+
+        content.removeAttribute("contenteditable");
+        content.innerHTML = renderMarkdownPreview(raw);
+      }
+
+      function enterEditMode(cardKey) {
+        editingCardKey = cardKey;
+        setActiveCard(cardKey);
+
+        const content = document.getElementById(cardKey + "-content");
+        content.focus();
+
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(content);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
 
       function createElement(tagName, className, textContent) {
@@ -914,6 +989,7 @@ Opportunities:
           const body = createElement("div", "card__body");
           const content = createElement("pre", "card__content", card.content);
           content.id = card.key + "-content";
+          content.dataset.raw = card.content;
           content.setAttribute("spellcheck", "false");
           body.appendChild(content);
 
@@ -925,10 +1001,40 @@ Opportunities:
         stack.replaceChildren(fragment);
         cards = Array.from(stack.querySelectorAll(".card[data-card]"));
         editableContent = Array.from(stack.querySelectorAll(".card__content"));
+
+        editableContent.forEach((content) => {
+          const cardKey = content.id.replace(/-content$/, "");
+
+          content.addEventListener("click", () => {
+            if (stack.dataset.active === cardKey && editingCardKey !== cardKey) {
+              enterEditMode(cardKey);
+            }
+          });
+
+          content.addEventListener("input", () => {
+            content.dataset.raw = content.textContent;
+          });
+
+          content.addEventListener("blur", () => {
+            content.dataset.raw = content.textContent;
+
+            if (editingCardKey === cardKey) {
+              editingCardKey = null;
+              setActiveCard(stack.dataset.active);
+            }
+          });
+        });
       }
 
       function setActiveCard(cardName) {
         const card = cardMap[cardName];
+
+        if (editingCardKey && editingCardKey !== cardName) {
+          const editingContent = document.getElementById(editingCardKey + "-content");
+          editingContent.dataset.raw = editingContent.textContent;
+          editingCardKey = null;
+        }
+
         stack.dataset.active = cardName;
         cards.forEach((card) => {
           card.classList.toggle("is-active", card.dataset.card === cardName);
@@ -937,8 +1043,14 @@ Opportunities:
           tab.setAttribute("aria-selected", String(tab.dataset.activateCard === cardName));
         });
         editableContent.forEach((content) => {
-          const isActive = content.id === cardName + "-content";
-          content.setAttribute("contenteditable", String(isActive));
+          const cardKey = content.id.replace(/-content$/, "");
+          const isEditing = editingCardKey === cardKey;
+
+          if (!isEditing && content.getAttribute("contenteditable") === "true") {
+            content.dataset.raw = content.textContent;
+          }
+
+          setContentMode(content, isEditing);
         });
         detailLabel.textContent = card.sideLabel;
         detailTitle.textContent = card.detailTitle;
@@ -950,7 +1062,11 @@ Opportunities:
         cards.forEach((card) => {
           const activate = () => setActiveCard(card.dataset.card);
 
-          card.addEventListener("mouseenter", activate);
+          card.addEventListener("mouseenter", () => {
+            if (!editingCardKey) {
+              activate();
+            }
+          });
           card.addEventListener("focus", activate);
           card.addEventListener("click", activate);
           card.addEventListener("keydown", (event) => {
@@ -964,7 +1080,11 @@ Opportunities:
         stackTabs.forEach((tab) => {
           const activate = () => setActiveCard(tab.dataset.activateCard);
 
-          tab.addEventListener("mouseenter", activate);
+          tab.addEventListener("mouseenter", () => {
+            if (!editingCardKey) {
+              activate();
+            }
+          });
           tab.addEventListener("focus", activate);
           tab.addEventListener("click", activate);
         });
