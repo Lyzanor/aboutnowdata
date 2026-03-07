@@ -156,13 +156,14 @@
         align-items: center;
         justify-self: end;
         width: min(100%, 35rem);
-        padding-top: 1rem;
+        padding: 1rem 2.75rem 0 0;
       }
 
       .stack {
         position: relative;
         width: 100%;
-        min-height: 40rem;
+        min-height: 44rem;
+        overflow: visible;
       }
 
       .card {
@@ -170,9 +171,10 @@
         --card-offset-y: 0px;
         --card-rotate: 0deg;
         --card-delay: 0s;
+        --card-trim: 0px;
         position: absolute;
         inset: 0 auto auto 0;
-        width: 100%;
+        width: calc(100% - var(--card-trim));
         border: 1px solid var(--line);
         border-radius: var(--radius);
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--paper));
@@ -189,21 +191,23 @@
         --card-offset-y: 0px;
         --card-rotate: -1.2deg;
         --card-delay: 0.1s;
+        --card-trim: 4.5rem;
         z-index: 3;
       }
 
       .card--data {
-        --card-offset-x: 18px;
-        --card-offset-y: 26px;
+        --card-offset-x: 26px;
+        --card-offset-y: 32px;
         --card-rotate: 1.25deg;
         --card-delay: 0.45s;
+        --card-trim: 2.15rem;
         z-index: 2;
         background: linear-gradient(180deg, rgba(247, 247, 247, 0.98), var(--paper-muted));
       }
 
       .card--now {
-        --card-offset-x: 34px;
-        --card-offset-y: 58px;
+        --card-offset-x: 52px;
+        --card-offset-y: 76px;
         --card-rotate: 2.2deg;
         --card-delay: 0.8s;
         z-index: 1;
@@ -426,7 +430,7 @@
         }
 
         .stack {
-          min-height: 42rem;
+          min-height: 45rem;
         }
       }
 
@@ -451,16 +455,25 @@
         }
 
         .stack {
-          min-height: 43rem;
+          min-height: 41rem;
+        }
+
+        .hero__stack {
+          padding-right: 1.5rem;
+        }
+
+        .card--about {
+          --card-trim: 2.4rem;
         }
 
         .card--data {
-          --card-offset-x: 12px;
-          --card-offset-y: 20px;
+          --card-offset-x: 16px;
+          --card-offset-y: 22px;
+          --card-trim: 1.1rem;
         }
 
         .card--now {
-          --card-offset-x: 22px;
+          --card-offset-x: 32px;
           --card-offset-y: 48px;
         }
 
