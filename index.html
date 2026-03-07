@@ -864,7 +864,6 @@ Opportunities:
       let cards = [];
       let stackTabs = [];
       let editableContent = [];
-      let editingCardKey = null;
 
       function getCardContent(cardName) {
         const content = document.getElementById(cardName + "-content");
@@ -909,21 +908,6 @@ Opportunities:
 
         content.removeAttribute("contenteditable");
         content.innerHTML = renderMarkdownPreview(raw);
-      }
-
-      function enterEditMode(cardKey) {
-        editingCardKey = cardKey;
-        setActiveCard(cardKey);
-
-        const content = document.getElementById(cardKey + "-content");
-        content.focus();
-
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(content);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
       }
 
       function createElement(tagName, className, textContent) {
@@ -999,37 +983,14 @@ Opportunities:
         editableContent = Array.from(stack.querySelectorAll(".card__content"));
 
         editableContent.forEach((content) => {
-          const cardKey = content.id.replace(/-content$/, "");
-
-          content.addEventListener("click", () => {
-            if (stack.dataset.active === cardKey && editingCardKey !== cardKey) {
-              enterEditMode(cardKey);
-            }
-          });
-
           content.addEventListener("input", () => {
             content.dataset.raw = content.textContent;
-          });
-
-          content.addEventListener("blur", () => {
-            content.dataset.raw = content.textContent;
-
-            if (editingCardKey === cardKey) {
-              editingCardKey = null;
-              setActiveCard(stack.dataset.active);
-            }
           });
         });
       }
 
       function setActiveCard(cardName) {
         const card = cardMap[cardName];
-
-        if (editingCardKey && editingCardKey !== cardName) {
-          const editingContent = document.getElementById(editingCardKey + "-content");
-          editingContent.dataset.raw = editingContent.textContent;
-          editingCardKey = null;
-        }
 
         stack.dataset.active = cardName;
         cards.forEach((card) => {
@@ -1039,14 +1000,13 @@ Opportunities:
           tab.setAttribute("aria-selected", String(tab.dataset.activateCard === cardName));
         });
         editableContent.forEach((content) => {
-          const cardKey = content.id.replace(/-content$/, "");
-          const isEditing = editingCardKey === cardKey;
+          const isActive = content.id === cardName + "-content";
 
-          if (!isEditing && content.getAttribute("contenteditable") === "true") {
+          if (!isActive && content.getAttribute("contenteditable") === "true") {
             content.dataset.raw = content.textContent;
           }
 
-          setContentMode(content, isEditing);
+          setContentMode(content, isActive);
         });
         detailLabel.textContent = card.sideLabel;
         detailTitle.textContent = card.detailTitle;
@@ -1058,11 +1018,7 @@ Opportunities:
         cards.forEach((card) => {
           const activate = () => setActiveCard(card.dataset.card);
 
-          card.addEventListener("mouseenter", () => {
-            if (!editingCardKey) {
-              activate();
-            }
-          });
+          card.addEventListener("mouseenter", activate);
           card.addEventListener("focus", activate);
           card.addEventListener("click", activate);
           card.addEventListener("keydown", (event) => {
@@ -1076,11 +1032,7 @@ Opportunities:
         stackTabs.forEach((tab) => {
           const activate = () => setActiveCard(tab.dataset.activateCard);
 
-          tab.addEventListener("mouseenter", () => {
-            if (!editingCardKey) {
-              activate();
-            }
-          });
+          tab.addEventListener("mouseenter", activate);
           tab.addEventListener("focus", activate);
           tab.addEventListener("click", activate);
         });
