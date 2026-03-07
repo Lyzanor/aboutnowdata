@@ -95,7 +95,7 @@
 
       .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+        grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
         gap: clamp(2.5rem, 5vw, 5.5rem);
         align-items: center;
         min-height: calc(100vh - 9rem);
@@ -103,7 +103,7 @@
       }
 
       .hero__copy {
-        max-width: 42rem;
+        max-width: 31rem;
       }
 
       .eyebrow {
@@ -130,9 +130,9 @@
 
       .hero__body {
         display: grid;
-        gap: 1.25rem;
-        font-size: 1.02rem;
-        line-height: 1.7;
+        gap: 1rem;
+        font-size: 0.98rem;
+        line-height: 1.62;
       }
 
       .callout {
@@ -153,16 +153,16 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         justify-self: end;
-        width: min(100%, 35rem);
-        padding: 1rem 2.75rem 0 0;
+        width: min(100%, 42rem);
+        padding: 0.5rem 1rem 0 0;
       }
 
       .stack {
         position: relative;
         width: 100%;
-        min-height: 44rem;
+        min-height: 48rem;
         overflow: visible;
       }
 
@@ -199,6 +199,7 @@
         --card-rotate: 0deg;
         --card-delay: 0s;
         --card-trim: 0px;
+        --card-scale: 1;
         position: absolute;
         inset: 0 auto auto 0;
         width: calc(100% - var(--card-trim));
@@ -206,7 +207,8 @@
         border-radius: var(--radius);
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--paper));
         box-shadow: var(--shadow);
-        transform: translate3d(var(--card-offset-x), var(--card-offset-y), 0) rotate(var(--card-rotate));
+        transform: translate3d(var(--card-offset-x), var(--card-offset-y), 0) rotate(var(--card-rotate)) scale(var(--card-scale));
+        transform-origin: top left;
         opacity: 0;
         animation: settle 820ms cubic-bezier(0.21, 1, 0.22, 1) forwards;
         animation-delay: var(--card-delay);
@@ -224,23 +226,23 @@
         --card-offset-y: 0px;
         --card-rotate: -1.2deg;
         --card-delay: 0.1s;
-        --card-trim: 4.5rem;
+        --card-trim: 5.2rem;
         z-index: 3;
       }
 
       .card--data {
-        --card-offset-x: 26px;
-        --card-offset-y: 32px;
+        --card-offset-x: 30px;
+        --card-offset-y: 34px;
         --card-rotate: 1.25deg;
         --card-delay: 0.45s;
-        --card-trim: 2.15rem;
+        --card-trim: 2.75rem;
         z-index: 2;
         background: linear-gradient(180deg, rgba(247, 247, 247, 0.98), var(--paper-muted));
       }
 
       .card--now {
-        --card-offset-x: 52px;
-        --card-offset-y: 76px;
+        --card-offset-x: 64px;
+        --card-offset-y: 88px;
         --card-rotate: 2.2deg;
         --card-delay: 0.8s;
         z-index: 1;
@@ -264,36 +266,39 @@
       }
 
       .card.is-active {
-        box-shadow: 0 28px 70px rgba(5, 5, 5, 0.12);
+        box-shadow: 0 32px 90px rgba(5, 5, 5, 0.16);
         border-color: var(--line-strong);
       }
 
       .stack[data-active="about"] .card--about,
       .stack[data-active="data"] .card--data,
       .stack[data-active="now"] .card--now {
-        --card-offset-x: 0px;
-        --card-offset-y: 0px;
-        --card-rotate: -1.2deg;
-        --card-trim: 4.5rem;
+        --card-offset-x: -14px;
+        --card-offset-y: -10px;
+        --card-rotate: -0.8deg;
+        --card-trim: 1.2rem;
+        --card-scale: 1.05;
         z-index: 3;
       }
 
       .stack[data-active="about"] .card--data,
       .stack[data-active="data"] .card--now,
       .stack[data-active="now"] .card--about {
-        --card-offset-x: 26px;
-        --card-offset-y: 32px;
+        --card-offset-x: 32px;
+        --card-offset-y: 38px;
         --card-rotate: 1.25deg;
-        --card-trim: 2.15rem;
+        --card-trim: 3rem;
+        --card-scale: 0.98;
         z-index: 2;
       }
 
       .stack[data-active="about"] .card--now,
       .stack[data-active="data"] .card--about,
       .stack[data-active="now"] .card--data {
-        --card-offset-x: 52px;
-        --card-offset-y: 76px;
+        --card-offset-x: 66px;
+        --card-offset-y: 92px;
         --card-rotate: 2.2deg;
+        --card-scale: 0.94;
         --card-trim: 0px;
         z-index: 1;
       }
@@ -342,14 +347,73 @@
         line-height: 1.6;
       }
 
+      .card__content {
+        min-height: 24rem;
+      }
+
+      .card__content[contenteditable="true"] {
+        outline: none;
+      }
+
+      .card__content[contenteditable="true"]::selection {
+        background: rgba(5, 5, 5, 0.14);
+      }
+
       .card--data pre {
         color: rgba(5, 5, 5, 0.62);
+      }
+
+      .stack__detail {
+        display: grid;
+        gap: 0.8rem;
+        margin-top: 1.35rem;
+        padding: 1.15rem 1.2rem 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.74);
+        backdrop-filter: blur(16px);
+      }
+
+      .stack__meta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .stack__meta h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        letter-spacing: -0.04em;
+      }
+
+      .stack__meta p,
+      .stack__detail p {
+        margin: 0;
+      }
+
+      .stack__eyebrow {
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .stack__description {
+        color: var(--fg);
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+
+      .stack__hint {
+        color: var(--muted);
+        font-size: 0.9rem;
       }
 
       .hero__actions {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0.75rem;
         margin-top: 2rem;
         font-size: 0.92rem;
@@ -381,7 +445,7 @@
 
       .hero__support {
         margin: 0.85rem 0 0;
-        text-align: center;
+        text-align: left;
         color: var(--muted);
         font-size: 0.92rem;
       }
@@ -503,7 +567,7 @@
         }
 
         .stack {
-          min-height: 45rem;
+          min-height: 47rem;
         }
       }
 
@@ -528,26 +592,26 @@
         }
 
         .stack {
-          min-height: 41rem;
+          min-height: 43rem;
         }
 
         .hero__stack {
-          padding-right: 1.5rem;
+          padding-right: 0.4rem;
         }
 
         .card--about {
-          --card-trim: 2.4rem;
+          --card-trim: 2.6rem;
         }
 
         .card--data {
-          --card-offset-x: 16px;
-          --card-offset-y: 22px;
-          --card-trim: 1.1rem;
+          --card-offset-x: 18px;
+          --card-offset-y: 24px;
+          --card-trim: 1.4rem;
         }
 
         .card--now {
-          --card-offset-x: 32px;
-          --card-offset-y: 48px;
+          --card-offset-x: 36px;
+          --card-offset-y: 52px;
         }
 
         .hero__actions {
@@ -565,23 +629,33 @@
         .stack[data-active="about"] .card--about,
         .stack[data-active="data"] .card--data,
         .stack[data-active="now"] .card--now {
-          --card-trim: 2.4rem;
+          --card-offset-x: -6px;
+          --card-offset-y: -4px;
+          --card-trim: 0.75rem;
+          --card-scale: 1.02;
         }
 
         .stack[data-active="about"] .card--data,
         .stack[data-active="data"] .card--now,
         .stack[data-active="now"] .card--about {
-          --card-offset-x: 16px;
-          --card-offset-y: 22px;
-          --card-trim: 1.1rem;
+          --card-offset-x: 18px;
+          --card-offset-y: 24px;
+          --card-trim: 1.4rem;
+          --card-scale: 0.985;
         }
 
         .stack[data-active="about"] .card--now,
         .stack[data-active="data"] .card--about,
         .stack[data-active="now"] .card--data {
-          --card-offset-x: 32px;
-          --card-offset-y: 48px;
+          --card-offset-x: 36px;
+          --card-offset-y: 52px;
           --card-trim: 0px;
+          --card-scale: 0.95;
+        }
+
+        .stack__meta {
+          flex-direction: column;
+          align-items: flex-start;
         }
       }
     </style>
@@ -600,22 +674,14 @@
           <p class="tagline">An agentic system, for humans.</p>
 
           <div class="hero__body">
-            <p>
-              About holds who you are — values, rules, identity. Rarely changes. Data holds what you know —
-              projects, references, structured detail. Now holds what matters today — priorities, context, next
-              steps.
-            </p>
-            <p>
-              Any AI agent can read this before it acts. What it reads is exactly what you wrote. No inference. No
-              drift. No surprises.
-            </p>
+            <p>About holds who you are. Data holds what you know. Now holds what matters today.</p>
+            <p>Any agent reads exactly what you wrote before it acts. No inference. No drift. No surprises.</p>
             <div>
               <p class="section__label">Why not automatic memory</p>
               <p>
-                Most memory systems infer and consolidate silently. You don't see what they store. When they're
-                wrong, you find out late.
+                Most memory systems infer and consolidate silently. You don't see what they store.
               </p>
-              <p>This is the opposite. You write it. You own it. Plain text, any editor, any agent.</p>
+              <p>This is the opposite. You write it. You own it.</p>
             </div>
           </div>
 
@@ -645,7 +711,7 @@
                 </button>
               </header>
               <div class="card__body">
-                <pre id="now-content">Now
+                <pre class="card__content" id="now-content" spellcheck="false">Now
 - [] Brief, current, actionable.
 Last updated: YYYY-MM-DD
 
@@ -673,7 +739,7 @@ Opportunities:
                 <span>Directory</span>
               </header>
               <div class="card__body">
-                <pre>Data/
+                <pre class="card__content" id="data-content" spellcheck="false">Data/
 ├── Notes.md
 ├── Projects/
 │ └── ...
@@ -690,7 +756,7 @@ Opportunities:
                 </button>
               </header>
               <div class="card__body">
-                <pre id="about-content">About
+                <pre class="card__content" id="about-content" spellcheck="false">About
 - [] Stable, defining, foundational.
 Last updated: YYYY-MM-DD
 
@@ -715,6 +781,20 @@ Boundaries:
               </div>
             </article>
           </div>
+
+          <section class="stack__detail" aria-live="polite">
+            <div class="stack__meta">
+              <div>
+                <p class="stack__eyebrow" id="detail-label">Stable layer</p>
+                <h2 id="detail-title">About.md is the durable core.</h2>
+              </div>
+              <p class="stack__hint" id="detail-mode">Click the card and edit directly.</p>
+            </div>
+            <p class="stack__description" id="detail-description">
+              Identity, values, boundaries, and style stay readable, editable, and versionable. This is the file an
+              agent should trust before it decides how to behave.
+            </p>
+          </section>
 
           <div class="hero__actions" aria-label="Starter file actions">
             <button class="cta" type="button" data-copy-target="about-content" data-status-target="about-status">Copy About.md</button>
@@ -760,12 +840,39 @@ Boundaries:
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-      const aboutContent = document.getElementById("about-content").textContent;
-      const nowContent = document.getElementById("now-content").textContent;
       const stack = document.querySelector(".stack");
       const cards = Array.from(document.querySelectorAll(".card[data-card]"));
       const stackTabs = Array.from(document.querySelectorAll("[data-activate-card]"));
+      const detailLabel = document.getElementById("detail-label");
+      const detailTitle = document.getElementById("detail-title");
+      const detailDescription = document.getElementById("detail-description");
+      const detailMode = document.getElementById("detail-mode");
+      const editableContent = Array.from(document.querySelectorAll(".card__content"));
       const statusTimers = new Map();
+      const cardDetails = {
+        about: {
+          label: "Stable layer",
+          title: "About.md is the durable core.",
+          description:
+            "Identity, values, boundaries, and style stay readable, editable, and versionable. This is the file an agent should trust before it decides how to behave."
+        },
+        data: {
+          label: "Knowledge layer",
+          title: "Data/ is the expandable working memory.",
+          description:
+            "Projects, notes, references, and tools can grow without polluting identity or today's focus. Keep the tree loose, plain-text, and easy to inspect."
+        },
+        now: {
+          label: "Current layer",
+          title: "Now.md keeps the system grounded in today.",
+          description:
+            "Priorities, risks, momentum, and next steps stay explicit. This is what stops an agent from acting on stale assumptions when the day has already changed."
+        }
+      };
+
+      function getCardContent(cardName) {
+        return document.getElementById(cardName + "-content").textContent;
+      }
 
       function setActiveCard(cardName) {
         stack.dataset.active = cardName;
@@ -775,6 +882,17 @@ Boundaries:
         stackTabs.forEach((tab) => {
           tab.setAttribute("aria-selected", String(tab.dataset.activateCard === cardName));
         });
+        editableContent.forEach((content) => {
+          const isActive = content.id === cardName + "-content";
+          content.setAttribute("contenteditable", String(isActive));
+        });
+        detailLabel.textContent = cardDetails[cardName].label;
+        detailTitle.textContent = cardDetails[cardName].title;
+        detailDescription.textContent = cardDetails[cardName].description;
+        detailMode.textContent =
+          cardName === "data"
+            ? "Click into the folder tree to adapt the structure."
+            : "Click into the file body to edit the text directly.";
       }
 
       cards.forEach((card) => {
@@ -849,8 +967,8 @@ Boundaries:
         }
 
         const zip = new JSZip();
-        zip.file("About.md", aboutContent);
-        zip.file("Now.md", nowContent);
+        zip.file("About.md", getCardContent("about"));
+        zip.file("Now.md", getCardContent("now"));
         zip.folder("Data");
 
         const blob = await zip.generateAsync({ type: "blob" });
@@ -863,6 +981,8 @@ Boundaries:
         link.remove();
         URL.revokeObjectURL(url);
       });
+
+      setActiveCard("about");
     </script>
   </body>
 </html>
