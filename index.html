@@ -727,7 +727,7 @@
         <div class="hero__stack">
           <div class="stack__topbar">
             <div class="stack__tabs" id="stack-tabs" role="tablist" aria-label="Framework files"></div>
-            <button class="stack__download" id="download-active" type="button">Download About.md</button>
+            <button class="stack__download" id="download-active" type="button">Download .zip</button>
           </div>
           <div class="stack" id="stack" aria-label="Framework starter files" data-active="about"></div>
 
@@ -930,10 +930,6 @@ Opportunities:
         URL.revokeObjectURL(url);
       }
 
-      function getDownloadLabel(card) {
-        return card.key === "data" ? "Download Data.zip" : "Download " + card.fileLabel;
-      }
-
       function createElement(tagName, className, textContent) {
         const element = document.createElement(tagName);
         if (className) {
@@ -1031,7 +1027,6 @@ Opportunities:
         detailTitle.textContent = card.detailTitle;
         detailDescription.textContent = card.detailDescription;
         detailMode.textContent = card.editHint;
-        downloadActiveButton.textContent = getDownloadLabel(card);
       }
 
       function bindInteractions() {
@@ -1111,7 +1106,7 @@ Opportunities:
         });
 
         downloadActiveButton.addEventListener("click", () => {
-          downloadCard(stack.dataset.active);
+          downloadZipBundle();
         });
       }
 
@@ -1121,7 +1116,7 @@ Opportunities:
       bindCopyActions();
       bindDownloadActions();
 
-      document.getElementById("download-zip").addEventListener("click", async () => {
+      async function downloadZipBundle() {
         if (!window.JSZip) {
           return;
         }
@@ -1140,7 +1135,9 @@ Opportunities:
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
-      });
+      }
+
+      document.getElementById("download-zip").addEventListener("click", downloadZipBundle);
 
       setActiveCard("about");
     </script>
