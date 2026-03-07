@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explanation | About / Data / Now</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #050505;
+        --muted: #6f6f6f;
+        --line: rgba(5, 5, 5, 0.16);
+        --line-strong: rgba(5, 5, 5, 0.28);
+        --surface: rgba(255, 255, 255, 0.76);
+        --surface-soft: #fafafa;
+        --radius: 22px;
+        --shadow: 0 24px 60px rgba(5, 5, 5, 0.08);
+        --content-width: 1180px;
+        --nav-pad: clamp(1.25rem, 2vw, 2rem);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(5, 5, 5, 0.03), transparent 34%),
+          linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+        color: var(--fg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(calc(100% - 2rem), var(--content-width));
+        margin: 0 auto;
+        padding: 6rem 0 2.5rem;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--nav-pad);
+        mix-blend-mode: multiply;
+      }
+
+      .nav::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .nav__brand,
+      .nav__link {
+        font-size: 0.9rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .nav__brand {
+        font-weight: 650;
+      }
+
+      .nav__link {
+        color: var(--muted);
+      }
+
+      .nav__link:hover,
+      .nav__link:focus-visible,
+      .footer a:hover,
+      .footer a:focus-visible {
+        color: var(--fg);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        gap: clamp(2.5rem, 5vw, 5.5rem);
+        align-items: start;
+        min-height: calc(100vh - 10rem);
+        padding: 2rem 0 4rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 1rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(3.2rem, 10vw, 7rem);
+        line-height: 0.94;
+        letter-spacing: -0.06em;
+      }
+
+      .hero__lead {
+        max-width: 36rem;
+        margin: 1.25rem 0 0;
+        font-size: clamp(1.08rem, 2vw, 1.4rem);
+        line-height: 1.55;
+        color: var(--muted);
+      }
+
+      .hero__summary {
+        display: grid;
+        gap: 1rem;
+        max-width: 32rem;
+        margin-top: 2rem;
+        font-size: 1rem;
+        line-height: 1.72;
+      }
+
+      .hero__panel {
+        display: grid;
+        gap: 1rem;
+        padding: 1.35rem;
+        border: 1px solid var(--line);
+        border-radius: calc(var(--radius) + 6px);
+        background: var(--surface);
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+      }
+
+      .quote {
+        margin: 0;
+        padding: 1.1rem 1.2rem;
+        border-left: 2px solid var(--fg);
+        background: rgba(255, 255, 255, 0.68);
+        font-size: clamp(1.05rem, 2vw, 1.35rem);
+        line-height: 1.5;
+      }
+
+      .panel-grid {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .panel-grid__row {
+        display: grid;
+        grid-template-columns: minmax(7rem, 10rem) 1fr;
+        gap: 1rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .panel-grid__row:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .panel-grid dt {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .panel-grid dd {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .section {
+        display: grid;
+        grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+        gap: clamp(2rem, 5vw, 5rem);
+        padding: 4rem 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section__label {
+        margin: 0;
+        font-size: 0.82rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .section__body {
+        max-width: 48rem;
+      }
+
+      .section h2 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.95rem, 4vw, 3rem);
+        line-height: 1.05;
+        letter-spacing: -0.05em;
+      }
+
+      .section p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.75;
+      }
+
+      .section__body > * + * {
+        margin-top: 1.2rem;
+      }
+
+      .layer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .layer-card {
+        display: grid;
+        gap: 1rem;
+        min-height: 21rem;
+        padding: 1.2rem 1.2rem 1.3rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
+        box-shadow: var(--shadow);
+      }
+
+      .layer-card h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        letter-spacing: -0.03em;
+      }
+
+      .layer-card p {
+        margin: 0;
+        line-height: 1.7;
+      }
+
+      .layer-card pre {
+        margin: 0;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .principle {
+        padding: 1.2rem 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      .principle strong {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .steps {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 2.6rem 1fr;
+        gap: 1rem;
+        align-items: start;
+        padding: 1rem 0 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .step:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .step__index {
+        display: grid;
+        place-items: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 0.92rem;
+      }
+
+      .step h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+      }
+
+      .callout {
+        padding: 1.2rem 1.25rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.62);
+      }
+
+      .callout p {
+        margin: 0;
+      }
+
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 2rem 0 0.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .footer__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .section {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .layer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(calc(100% - 1.25rem), var(--content-width));
+          padding-top: 5rem;
+        }
+
+        .nav {
+          padding: 1rem 0.625rem;
+        }
+
+        .nav__brand,
+        .nav__link {
+          font-size: 0.78rem;
+        }
+
+        .panel-grid__row,
+        .step {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="index.html">About / Data / Now</a>
+      <a class="nav__link" href="index.html">Home</a>
+    </nav>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="explanation-title">
+        <div>
+          <p class="eyebrow">Explanation</p>
+          <h1 id="explanation-title">A memory system built for humans first, and agents second.</h1>
+          <p class="hero__lead">
+            About / Data / Now is not an assistant feature. It is a simple operational model for keeping identity,
+            knowledge, and current priorities separate enough to remain legible.
+          </p>
+          <div class="hero__summary">
+            <p>
+              <code>About</code> carries stable context: values, rules, identity, voice, boundaries.
+              <code>Data</code> carries structured detail: notes, projects, references, tools.
+              <code>Now</code> carries what matters today: active priorities, recent context, next steps.
+            </p>
+            <p>
+              The point is not to infer memory better. The point is to make memory inspectable, editable, portable,
+              and safe for agents to read before they act.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero__panel">
+          <p class="quote">Don't make humans learn the system. Make the system understand the human.</p>
+          <dl class="panel-grid">
+            <div class="panel-grid__row">
+              <dt>Base unit</dt>
+              <dd>Semantic files and folders: <code>About</code>, <code>Now</code>, <code>Data</code>.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Governance</dt>
+              <dd>Human-curated, explicit, and inspectable. No silent consolidation.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Temporal model</dt>
+              <dd>Clear separation between what is stable and what is current.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Main risk</dt>
+              <dd>The system becomes thin or stale if the user never updates it.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Main strength</dt>
+              <dd>Auditability and human legibility, even when multiple agents are involved.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="layers-title">
+        <p class="section__label">Three Layers</p>
+        <div class="section__body">
+          <h2 id="layers-title">One system, three roles.</h2>
+          <p>
+            The framework stays small by giving each layer a precise job. That separation is what makes it usable for
+            both a person and an agent.
+          </p>
+          <div class="layer-grid">
+            <article class="layer-card">
+              <div>
+                <h3>About</h3>
+                <p>Stable, defining, foundational. This is where identity and operating constraints live.</p>
+              </div>
+              <pre>Identity
+Values
+Goals
+Principles
+Boundaries
+Voice / style</pre>
+            </article>
+            <article class="layer-card">
+              <div>
+                <h3>Data</h3>
+                <p>Structured detail and project knowledge. This layer absorbs supporting depth without polluting the core.</p>
+              </div>
+              <pre>Projects/
+Notes.md
+Sources.md
+Tools.md
+References
+Archive</pre>
+            </article>
+            <article class="layer-card">
+              <div>
+                <h3>Now</h3>
+                <p>Brief, current, actionable. This is the fastest-moving layer and the easiest one to refresh.</p>
+              </div>
+              <pre>Top of mind
+Active projects
+Recent activity
+Next steps
+Risks
+Opportunities</pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="why-title">
+        <p class="section__label">Why This Shape</p>
+        <div class="section__body">
+          <h2 id="why-title">The memory model is the product.</h2>
+          <p>
+            Most memory systems optimize for automatic capture, latent inference, and silent consolidation. That feels
+            convenient until the stored memory is wrong, outdated, or impossible to inspect.
+          </p>
+          <p>
+            About / Data / Now takes the opposite position. Memory should be legible. Stable context and changing
+            context should never be mixed. Human control matters more than hidden cleverness.
+          </p>
+          <div class="principle">
+            <strong>Core rule</strong>
+            <p>Agents should read before they act.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="agent-title">
+        <p class="section__label">Agent Use</p>
+        <div class="section__body">
+          <h2 id="agent-title">How an agent should use it.</h2>
+          <div class="steps">
+            <article class="step">
+              <div class="step__index">1</div>
+              <div>
+                <h3>Read <code>About</code> first</h3>
+                <p>Start with identity, values, rules, and boundaries so behavior is aligned before any action begins.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__index">2</div>
+              <div>
+                <h3>Use <code>Data</code> for depth</h3>
+                <p>Pull project details, notes, references, and supporting structure only when needed.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__index">3</div>
+              <div>
+                <h3>Act from <code>Now</code></h3>
+                <p>Use the current state to prioritize correctly and avoid acting from stale assumptions.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__index">4</div>
+              <div>
+                <h3>Write back explicitly</h3>
+                <p>When the system changes, update the relevant file instead of inventing hidden memory elsewhere.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="now-title">
+        <p class="section__label">Why Now</p>
+        <div class="section__body">
+          <h2 id="now-title">Model advances make the current layer easy to maintain.</h2>
+          <p>
+            Thanks to recent improvements in the models themselves, refreshing <code>Now</code> is no longer the hard
+            part. An agent can help summarize recent activity, extract next steps, or rewrite the current state in a
+            few seconds, regardless of which model or ecosystem you use.
+          </p>
+          <p>
+            That makes About / Data / Now more than a local note-taking format. It becomes a transversal agent memory:
+            one structure that different agents can read, update, and respect without depending on a single vendor or
+            product.
+          </p>
+          <div class="callout">
+            <p>
+              The risk is not that agents cannot update the system. The risk is that the human never keeps it alive.
+              The design goal is to make updating <code>Now</code> cheap enough that the system stays useful.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="adoption-title">
+        <p class="section__label">Adoption</p>
+        <div class="section__body">
+          <h2 id="adoption-title">Start smaller than you think.</h2>
+          <p>
+            You do not need a perfect personal operating system to begin. A short <code>About.md</code>, a minimal
+            <code>Now.md</code>, and an empty <code>Data/</code> folder are enough.
+          </p>
+          <p>
+            Keep <code>About</code> rare, keep <code>Now</code> easy, and let <code>Data</code> grow only where it
+            proves useful. The system should remain valuable even if there is no automation at all.
+          </p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <a href="mailto:hello@aboutdatanow.com">hello@aboutdatanow.com</a>
+        <div class="footer__links">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
