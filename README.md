@@ -10,7 +10,7 @@ Static single-file site for the About Now Data framework.
 
 ## Update Guide
 
-Most future edits should happen in one place inside [index.html](/Users/lyzanor/Documents/Me/Data/Projects/Invento%20de%20la%20IA/Data/Web%20About%20Data%20Now/Data/Github%20-%20About%20Data%20Now/index.html):
+Most future edits should happen in one place inside [index.html](/Users/lyzanor/Documents/Me/Data/Projects/Invento%20de%20la%20IA/Data/Web%20About%20Now%20Data/Data/Github%20-%20About%20Now%20Data/index.html):
 
 - Search for `const HERO_CARDS = [` in the script near the bottom.
 - Each card object controls:

@@ -230,22 +230,22 @@
         z-index: 3;
       }
 
-      .card--data {
+      .card--now {
         --card-offset-x: 30px;
         --card-offset-y: 34px;
         --card-rotate: 1.25deg;
         --card-delay: 0.45s;
         --card-trim: 2.75rem;
         z-index: 2;
-        background: linear-gradient(180deg, rgba(247, 247, 247, 0.98), var(--paper-muted));
       }
 
-      .card--now {
+      .card--data {
         --card-offset-x: 64px;
         --card-offset-y: 88px;
         --card-rotate: 2.2deg;
         --card-delay: 0.8s;
         z-index: 1;
+        background: linear-gradient(180deg, rgba(247, 247, 247, 0.98), var(--paper-muted));
       }
 
       .card__header {
@@ -281,9 +281,9 @@
         z-index: 3;
       }
 
-      .stack[data-active="about"] .card--data,
-      .stack[data-active="data"] .card--now,
-      .stack[data-active="now"] .card--about {
+      .stack[data-active="about"] .card--now,
+      .stack[data-active="now"] .card--data,
+      .stack[data-active="data"] .card--about {
         --card-offset-x: 32px;
         --card-offset-y: 38px;
         --card-rotate: 1.25deg;
@@ -292,9 +292,9 @@
         z-index: 2;
       }
 
-      .stack[data-active="about"] .card--now,
-      .stack[data-active="data"] .card--about,
-      .stack[data-active="now"] .card--data {
+      .stack[data-active="about"] .card--data,
+      .stack[data-active="now"] .card--about,
+      .stack[data-active="data"] .card--now {
         --card-offset-x: 66px;
         --card-offset-y: 92px;
         --card-rotate: 2.2deg;
@@ -603,13 +603,13 @@
           --card-trim: 2.6rem;
         }
 
-        .card--data {
+        .card--now {
           --card-offset-x: 18px;
           --card-offset-y: 24px;
           --card-trim: 1.4rem;
         }
 
-        .card--now {
+        .card--data {
           --card-offset-x: 36px;
           --card-offset-y: 52px;
         }
@@ -635,18 +635,18 @@
           --card-scale: 1.02;
         }
 
-        .stack[data-active="about"] .card--data,
-        .stack[data-active="data"] .card--now,
-        .stack[data-active="now"] .card--about {
+        .stack[data-active="about"] .card--now,
+        .stack[data-active="now"] .card--data,
+        .stack[data-active="data"] .card--about {
           --card-offset-x: 18px;
           --card-offset-y: 24px;
           --card-trim: 1.4rem;
           --card-scale: 0.985;
         }
 
-        .stack[data-active="about"] .card--now,
-        .stack[data-active="data"] .card--about,
-        .stack[data-active="now"] .card--data {
+        .stack[data-active="about"] .card--data,
+        .stack[data-active="now"] .card--about,
+        .stack[data-active="data"] .card--now {
           --card-offset-x: 36px;
           --card-offset-y: 52px;
           --card-trim: 0px;
@@ -674,7 +674,7 @@
           <p class="tagline">An agentic system, for humans.</p>
 
           <div class="hero__body">
-            <p>About holds who you are. Data holds what you know. Now holds what matters today.</p>
+            <p>About holds who you are. Now holds what matters today. Data holds what you know.</p>
             <p>Any agent reads exactly what you wrote before it acts. No inference. No drift. No surprises.</p>
             <div>
               <p class="section__label">Why not automatic memory</p>
@@ -789,24 +789,6 @@ Boundaries:
 - []`
         },
         {
-          key: "data",
-          tabLabel: "Data",
-          fileLabel: "Data/",
-          sideLabel: "Knowledge layer",
-          detailTitle: "Data/ is the expandable working memory.",
-          detailDescription:
-            "Projects, notes, references, and tools can grow without polluting identity or today's focus. Keep the tree loose, plain-text, and easy to inspect.",
-          editHint: "Click into the folder tree to adapt the structure.",
-          copyable: false,
-          headerMeta: "Directory",
-          content: `Data/
-├── Notes.md
-├── Projects/
-│ └── ...
-├── Tools.md
-└── whatever you need`
-        },
-        {
           key: "now",
           tabLabel: "Now",
           fileLabel: "Now.md",
@@ -836,6 +818,24 @@ Risks:
 - []
 Opportunities:
 - []`
+        },
+        {
+          key: "data",
+          tabLabel: "Data",
+          fileLabel: "Data/",
+          sideLabel: "Knowledge layer",
+          detailTitle: "Data/ is the expandable working memory.",
+          detailDescription:
+            "Projects, notes, references, and tools can grow without polluting identity or today's focus. Keep the tree loose, plain-text, and easy to inspect.",
+          editHint: "Click into the folder tree to adapt the structure.",
+          copyable: false,
+          headerMeta: "Directory",
+          content: `Data/
+├── Notes.md
+├── Projects/
+│ └── ...
+├── Tools.md
+└── whatever you need`
         }
       ];
 
