@@ -691,96 +691,8 @@
         </div>
 
         <div class="hero__stack">
-          <div class="stack__tabs" role="tablist" aria-label="Framework files">
-            <button class="stack__tab" type="button" role="tab" aria-selected="true" aria-controls="card-about" data-activate-card="about">
-              About
-            </button>
-            <button class="stack__tab" type="button" role="tab" aria-selected="false" aria-controls="card-data" data-activate-card="data">
-              Data
-            </button>
-            <button class="stack__tab" type="button" role="tab" aria-selected="false" aria-controls="card-now" data-activate-card="now">
-              Now
-            </button>
-          </div>
-          <div class="stack" aria-label="Framework starter files" data-active="about">
-            <article class="card card--now" id="card-now" data-card="now" tabindex="0" aria-label="Now.md card">
-              <header class="card__header">
-                <span>Now.md</span>
-                <button class="card__copy" type="button" data-copy-target="now-content" data-status-target="now-status">
-                  Copy <span class="status" id="now-status" aria-live="polite"></span>
-                </button>
-              </header>
-              <div class="card__body">
-                <pre class="card__content" id="now-content" spellcheck="false">Now
-- [] Brief, current, actionable.
-Last updated: YYYY-MM-DD
-
-## Status
-Top of mind:
-- []
-Active projects:
-- []
-
-## Context
-Recent activity:
-- []
-Next steps:
-- []
-Risks:
-- []
-Opportunities:
-- []</pre>
-              </div>
-            </article>
-
-            <article class="card card--data" id="card-data" data-card="data" tabindex="0" aria-label="Data folder">
-              <header class="card__header">
-                <span>Data/</span>
-                <span>Directory</span>
-              </header>
-              <div class="card__body">
-                <pre class="card__content" id="data-content" spellcheck="false">Data/
-├── Notes.md
-├── Projects/
-│ └── ...
-├── Tools.md
-└── whatever you need</pre>
-              </div>
-            </article>
-
-            <article class="card card--about is-active" id="card-about" data-card="about" tabindex="0" aria-label="About.md card">
-              <header class="card__header">
-                <span>About.md</span>
-                <button class="card__copy" type="button" data-copy-target="about-content" data-status-target="about-status">
-                  Copy <span class="status" id="about-status" aria-live="polite"></span>
-                </button>
-              </header>
-              <div class="card__body">
-                <pre class="card__content" id="about-content" spellcheck="false">About
-- [] Stable, defining, foundational.
-Last updated: YYYY-MM-DD
-
-## Identity / Description
-About:
-- []
-Name / Team:
-- []
-Voice / Style:
-- []
-
-## Direction
-Values:
-- []
-Goals:
-- []
-
-## Rules Principles
-- []
-Boundaries:
-- []</pre>
-              </div>
-            </article>
-          </div>
+          <div class="stack__tabs" id="stack-tabs" role="tablist" aria-label="Framework files"></div>
+          <div class="stack" id="stack" aria-label="Framework starter files" data-active="about"></div>
 
           <section class="stack__detail" aria-live="polite">
             <div class="stack__meta">
@@ -797,9 +709,9 @@ Boundaries:
           </section>
 
           <div class="hero__actions" aria-label="Starter file actions">
-            <button class="cta" type="button" data-copy-target="about-content" data-status-target="about-status">Copy About.md</button>
+            <button class="cta" type="button" data-copy-key="about" data-status-target="about-status">Copy About.md</button>
             <span aria-hidden="true">·</span>
-            <button class="cta" type="button" data-copy-target="now-content" data-status-target="now-status">Copy Now.md</button>
+            <button class="cta" type="button" data-copy-key="now" data-status-target="now-status">Copy Now.md</button>
             <span aria-hidden="true">·</span>
             <button class="cta" id="download-zip" type="button">Download .zip</button>
           </div>
@@ -840,41 +752,183 @@ Boundaries:
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-      const stack = document.querySelector(".stack");
-      const cards = Array.from(document.querySelectorAll(".card[data-card]"));
-      const stackTabs = Array.from(document.querySelectorAll("[data-activate-card]"));
+      // Single source of truth for the interactive hero content and labels.
+      const HERO_CARDS = [
+        {
+          key: "about",
+          tabLabel: "About",
+          fileLabel: "About.md",
+          sideLabel: "Stable layer",
+          detailTitle: "About.md is the durable core.",
+          detailDescription:
+            "Identity, values, boundaries, and style stay readable, editable, and versionable. This is the file an agent should trust before it decides how to behave.",
+          editHint: "Click into the file body to edit the text directly.",
+          copyable: true,
+          headerMeta: "copy",
+          content: `About
+- [] Stable, defining, foundational.
+Last updated: YYYY-MM-DD
+
+## Identity / Description
+About:
+- []
+Name / Team:
+- []
+Voice / Style:
+- []
+
+## Direction
+Values:
+- []
+Goals:
+- []
+
+## Rules Principles
+- []
+Boundaries:
+- []`
+        },
+        {
+          key: "data",
+          tabLabel: "Data",
+          fileLabel: "Data/",
+          sideLabel: "Knowledge layer",
+          detailTitle: "Data/ is the expandable working memory.",
+          detailDescription:
+            "Projects, notes, references, and tools can grow without polluting identity or today's focus. Keep the tree loose, plain-text, and easy to inspect.",
+          editHint: "Click into the folder tree to adapt the structure.",
+          copyable: false,
+          headerMeta: "Directory",
+          content: `Data/
+├── Notes.md
+├── Projects/
+│ └── ...
+├── Tools.md
+└── whatever you need`
+        },
+        {
+          key: "now",
+          tabLabel: "Now",
+          fileLabel: "Now.md",
+          sideLabel: "Current layer",
+          detailTitle: "Now.md keeps the system grounded in today.",
+          detailDescription:
+            "Priorities, risks, momentum, and next steps stay explicit. This is what stops an agent from acting on stale assumptions when the day has already changed.",
+          editHint: "Click into the file body to edit the text directly.",
+          copyable: true,
+          headerMeta: "copy",
+          content: `Now
+- [] Brief, current, actionable.
+Last updated: YYYY-MM-DD
+
+## Status
+Top of mind:
+- []
+Active projects:
+- []
+
+## Context
+Recent activity:
+- []
+Next steps:
+- []
+Risks:
+- []
+Opportunities:
+- []`
+        }
+      ];
+
+      const cardMap = Object.fromEntries(HERO_CARDS.map((card) => [card.key, card]));
+      const stack = document.getElementById("stack");
+      const stackTabsRoot = document.getElementById("stack-tabs");
       const detailLabel = document.getElementById("detail-label");
       const detailTitle = document.getElementById("detail-title");
       const detailDescription = document.getElementById("detail-description");
       const detailMode = document.getElementById("detail-mode");
-      const editableContent = Array.from(document.querySelectorAll(".card__content"));
       const statusTimers = new Map();
-      const cardDetails = {
-        about: {
-          label: "Stable layer",
-          title: "About.md is the durable core.",
-          description:
-            "Identity, values, boundaries, and style stay readable, editable, and versionable. This is the file an agent should trust before it decides how to behave."
-        },
-        data: {
-          label: "Knowledge layer",
-          title: "Data/ is the expandable working memory.",
-          description:
-            "Projects, notes, references, and tools can grow without polluting identity or today's focus. Keep the tree loose, plain-text, and easy to inspect."
-        },
-        now: {
-          label: "Current layer",
-          title: "Now.md keeps the system grounded in today.",
-          description:
-            "Priorities, risks, momentum, and next steps stay explicit. This is what stops an agent from acting on stale assumptions when the day has already changed."
-        }
-      };
+      let cards = [];
+      let stackTabs = [];
+      let editableContent = [];
 
       function getCardContent(cardName) {
         return document.getElementById(cardName + "-content").textContent;
       }
 
+      function createElement(tagName, className, textContent) {
+        const element = document.createElement(tagName);
+        if (className) {
+          element.className = className;
+        }
+        if (typeof textContent === "string") {
+          element.textContent = textContent;
+        }
+        return element;
+      }
+
+      function renderTabs() {
+        const fragment = document.createDocumentFragment();
+
+        HERO_CARDS.forEach((card, index) => {
+          const button = createElement("button", "stack__tab", card.tabLabel);
+          button.type = "button";
+          button.setAttribute("role", "tab");
+          button.setAttribute("aria-selected", String(index === 0));
+          button.setAttribute("aria-controls", "card-" + card.key);
+          button.dataset.activateCard = card.key;
+          fragment.appendChild(button);
+        });
+
+        stackTabsRoot.replaceChildren(fragment);
+        stackTabs = Array.from(stackTabsRoot.querySelectorAll("[data-activate-card]"));
+      }
+
+      function renderCards() {
+        const fragment = document.createDocumentFragment();
+
+        HERO_CARDS.slice().reverse().forEach((card) => {
+          const article = createElement("article", "card card--" + card.key);
+          article.id = "card-" + card.key;
+          article.dataset.card = card.key;
+          article.tabIndex = 0;
+          article.setAttribute("aria-label", card.fileLabel + " card");
+
+          const header = createElement("header", "card__header");
+          header.appendChild(createElement("span", "", card.fileLabel));
+
+          if (card.copyable) {
+            const copyButton = createElement("button", "card__copy", "Copy ");
+            copyButton.type = "button";
+            copyButton.dataset.copyKey = card.key;
+            copyButton.dataset.statusTarget = card.key + "-status";
+
+            const status = createElement("span", "status", "");
+            status.id = card.key + "-status";
+            status.setAttribute("aria-live", "polite");
+            copyButton.appendChild(status);
+            header.appendChild(copyButton);
+          } else {
+            header.appendChild(createElement("span", "", card.headerMeta));
+          }
+
+          const body = createElement("div", "card__body");
+          const content = createElement("pre", "card__content", card.content);
+          content.id = card.key + "-content";
+          content.setAttribute("spellcheck", "false");
+          body.appendChild(content);
+
+          article.appendChild(header);
+          article.appendChild(body);
+          fragment.appendChild(article);
+        });
+
+        stack.replaceChildren(fragment);
+        cards = Array.from(stack.querySelectorAll(".card[data-card]"));
+        editableContent = Array.from(stack.querySelectorAll(".card__content"));
+      }
+
       function setActiveCard(cardName) {
+        const card = cardMap[cardName];
         stack.dataset.active = cardName;
         cards.forEach((card) => {
           card.classList.toggle("is-active", card.dataset.card === cardName);
@@ -886,36 +940,35 @@ Boundaries:
           const isActive = content.id === cardName + "-content";
           content.setAttribute("contenteditable", String(isActive));
         });
-        detailLabel.textContent = cardDetails[cardName].label;
-        detailTitle.textContent = cardDetails[cardName].title;
-        detailDescription.textContent = cardDetails[cardName].description;
-        detailMode.textContent =
-          cardName === "data"
-            ? "Click into the folder tree to adapt the structure."
-            : "Click into the file body to edit the text directly.";
+        detailLabel.textContent = card.sideLabel;
+        detailTitle.textContent = card.detailTitle;
+        detailDescription.textContent = card.detailDescription;
+        detailMode.textContent = card.editHint;
       }
 
-      cards.forEach((card) => {
-        const activate = () => setActiveCard(card.dataset.card);
+      function bindInteractions() {
+        cards.forEach((card) => {
+          const activate = () => setActiveCard(card.dataset.card);
 
-        card.addEventListener("mouseenter", activate);
-        card.addEventListener("focus", activate);
-        card.addEventListener("click", activate);
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            activate();
-          }
+          card.addEventListener("mouseenter", activate);
+          card.addEventListener("focus", activate);
+          card.addEventListener("click", activate);
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              activate();
+            }
+          });
         });
-      });
 
-      stackTabs.forEach((tab) => {
-        const activate = () => setActiveCard(tab.dataset.activateCard);
+        stackTabs.forEach((tab) => {
+          const activate = () => setActiveCard(tab.dataset.activateCard);
 
-        tab.addEventListener("mouseenter", activate);
-        tab.addEventListener("focus", activate);
-        tab.addEventListener("click", activate);
-      });
+          tab.addEventListener("mouseenter", activate);
+          tab.addEventListener("focus", activate);
+          tab.addEventListener("click", activate);
+        });
+      }
 
       function fallbackCopyText(text) {
         const textarea = document.createElement("textarea");
@@ -952,14 +1005,20 @@ Boundaries:
         }
       }
 
-      document.querySelectorAll("[data-copy-target]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const targetId = button.getAttribute("data-copy-target");
-          const statusId = button.getAttribute("data-status-target");
-          const text = document.getElementById(targetId).textContent;
-          copyText(text, statusId);
+      function bindCopyActions() {
+        document.querySelectorAll("[data-copy-key]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const key = button.getAttribute("data-copy-key");
+            const statusId = button.getAttribute("data-status-target");
+            copyText(getCardContent(key), statusId);
+          });
         });
-      });
+      }
+
+      renderTabs();
+      renderCards();
+      bindInteractions();
+      bindCopyActions();
 
       document.getElementById("download-zip").addEventListener("click", async () => {
         if (!window.JSZip) {
