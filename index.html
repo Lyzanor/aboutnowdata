@@ -168,14 +168,20 @@
 
       .stack__tabs {
         display: inline-flex;
-        align-self: flex-start;
         gap: 0.35rem;
-        margin: 0 0 1rem;
         padding: 0.28rem;
         border: 1px solid var(--line);
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.78);
         backdrop-filter: blur(14px);
+      }
+
+      .stack__topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.9rem;
+        margin: 0 0 1rem;
       }
 
       .stack__tab {
@@ -191,6 +197,24 @@
       .stack__tab[aria-selected="true"] {
         background: var(--fg);
         color: #ffffff;
+      }
+
+      .stack__download,
+      .card__action {
+        flex-shrink: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 180ms ease, transform 180ms ease;
+      }
+
+      .stack__download:hover,
+      .stack__download:focus-visible,
+      .card__action:hover,
+      .card__action:focus-visible {
+        color: var(--fg);
+        transform: translateY(-1px);
       }
 
       .card {
@@ -305,6 +329,12 @@
 
       .card__header span:last-child {
         color: var(--muted);
+      }
+
+      .card__actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.9rem;
       }
 
       .card__copy {
@@ -598,6 +628,11 @@
           padding-right: 0.4rem;
         }
 
+        .stack__topbar {
+          flex-wrap: wrap;
+          align-items: flex-start;
+        }
+
         .card--about {
           --card-trim: 2.6rem;
         }
@@ -690,7 +725,10 @@
         </div>
 
         <div class="hero__stack">
-          <div class="stack__tabs" id="stack-tabs" role="tablist" aria-label="Framework files"></div>
+          <div class="stack__topbar">
+            <div class="stack__tabs" id="stack-tabs" role="tablist" aria-label="Framework files"></div>
+            <button class="stack__download" id="download-active" type="button">Download About.md</button>
+          </div>
           <div class="stack" id="stack" aria-label="Framework starter files" data-active="about"></div>
 
           <section class="stack__detail" aria-live="polite">
@@ -845,6 +883,7 @@ Opportunities:
       const detailTitle = document.getElementById("detail-title");
       const detailDescription = document.getElementById("detail-description");
       const detailMode = document.getElementById("detail-mode");
+      const downloadActiveButton = document.getElementById("download-active");
       const statusTimers = new Map();
       let cards = [];
       let stackTabs = [];
@@ -852,6 +891,47 @@ Opportunities:
 
       function getCardContent(cardName) {
         return document.getElementById(cardName + "-content").textContent;
+      }
+
+      async function downloadCard(cardKey) {
+        const card = cardMap[cardKey];
+
+        if (!card) {
+          return;
+        }
+
+        if (cardKey === "data") {
+          if (!window.JSZip) {
+            return;
+          }
+
+          const zip = new JSZip();
+          zip.folder("Data");
+          const blob = await zip.generateAsync({ type: "blob" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "data.zip";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          return;
+        }
+
+        const blob = new Blob([getCardContent(cardKey)], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = card.fileLabel;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function getDownloadLabel(card) {
+        return card.key === "data" ? "Download Data.zip" : "Download " + card.fileLabel;
       }
 
       function createElement(tagName, className, textContent) {
@@ -895,6 +975,8 @@ Opportunities:
           const header = createElement("header", "card__header");
           header.appendChild(createElement("span", "", card.fileLabel));
 
+          const actions = createElement("div", "card__actions");
+
           if (card.copyable) {
             const copyButton = createElement("button", "card__copy", "Copy ");
             copyButton.type = "button";
@@ -905,10 +987,16 @@ Opportunities:
             status.id = card.key + "-status";
             status.setAttribute("aria-live", "polite");
             copyButton.appendChild(status);
-            header.appendChild(copyButton);
+            actions.appendChild(copyButton);
           } else {
-            header.appendChild(createElement("span", "", card.headerMeta));
+            actions.appendChild(createElement("span", "", card.headerMeta));
           }
+
+          const downloadButton = createElement("button", "card__action", card.key === "data" ? "Download zip" : "Download");
+          downloadButton.type = "button";
+          downloadButton.dataset.downloadKey = card.key;
+          actions.appendChild(downloadButton);
+          header.appendChild(actions);
 
           const body = createElement("div", "card__body");
           const content = createElement("pre", "card__content", card.content);
@@ -943,6 +1031,7 @@ Opportunities:
         detailTitle.textContent = card.detailTitle;
         detailDescription.textContent = card.detailDescription;
         detailMode.textContent = card.editHint;
+        downloadActiveButton.textContent = getDownloadLabel(card);
       }
 
       function bindInteractions() {
@@ -1014,10 +1103,23 @@ Opportunities:
         });
       }
 
+      function bindDownloadActions() {
+        document.querySelectorAll("[data-download-key]").forEach((button) => {
+          button.addEventListener("click", () => {
+            downloadCard(button.getAttribute("data-download-key"));
+          });
+        });
+
+        downloadActiveButton.addEventListener("click", () => {
+          downloadCard(stack.dataset.active);
+        });
+      }
+
       renderTabs();
       renderCards();
       bindInteractions();
       bindCopyActions();
+      bindDownloadActions();
 
       document.getElementById("download-zip").addEventListener("click", async () => {
         if (!window.JSZip) {
