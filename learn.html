@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Explanation | About Now Data</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cpath d='M19 48V16h13.5c8.7 0 14.5 6.2 14.5 16s-5.8 16-14.5 16H19zm7-6h5.8c4.9 0 8.1-3.9 8.1-10s-3.2-10-8.1-10H26v20z' fill='%23ffffff'/%3E%3C/svg%3E"
+    />
     <style>
       :root {
         --bg: #ffffff;
         --fg: #050505;
         --muted: #6f6f6f;
+        --accent: #1f7a4d;
         --line: rgba(5, 5, 5, 0.16);
         --line-strong: rgba(5, 5, 5, 0.28);
         --surface: rgba(255, 255, 255, 0.76);
@@ -192,6 +197,11 @@
         border-top: 1px solid var(--line);
       }
 
+      .section--feature {
+        grid-template-columns: 1fr;
+        gap: 1.35rem;
+      }
+
       .section__label {
         margin: 0;
         font-size: 0.82rem;
@@ -202,6 +212,10 @@
 
       .section__body {
         max-width: 48rem;
+      }
+
+      .section__body--wide {
+        max-width: none;
       }
 
       .section h2 {
@@ -322,6 +336,81 @@
         margin: 0;
       }
 
+      .skill-block {
+        display: grid;
+        gap: 1.4rem;
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .skill-card {
+        display: grid;
+        align-content: start;
+        gap: 0.85rem;
+        min-height: 15rem;
+        padding: 1.2rem 1.2rem 1.3rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
+        box-shadow: var(--shadow);
+      }
+
+      .skill-card--accent {
+        border-color: rgba(31, 122, 77, 0.22);
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.08), rgba(255, 255, 255, 0.96) 30%),
+          rgba(255, 255, 255, 0.98);
+      }
+
+      .skill-card__label {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .skill-card--accent .skill-card__label {
+        color: var(--accent);
+      }
+
+      .skill-card h3 {
+        margin: 0;
+        font-size: 1.12rem;
+        letter-spacing: -0.03em;
+      }
+
+      .skill-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .skill-list li {
+        position: relative;
+        padding-left: 1rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .skill-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.7rem;
+        width: 0.35rem;
+        height: 0.35rem;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.45;
+      }
+
       .footer {
         display: flex;
         flex-wrap: wrap;
@@ -350,6 +439,10 @@
         }
 
         .layer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .skill-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -435,9 +528,9 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="layers-title">
+      <section class="section section--feature" aria-labelledby="layers-title">
         <p class="section__label">Three Layers</p>
-        <div class="section__body">
+        <div class="section__body section__body--wide">
           <h2 id="layers-title">One system, three roles.</h2>
           <p>
             The framework stays small by giving each layer a precise job. That separation is what makes it usable for
@@ -484,6 +577,49 @@ Archive</pre>
         </div>
       </section>
 
+      <section class="section section--feature" aria-labelledby="about-skill-title">
+        <p class="section__label">About Skill</p>
+        <div class="section__body section__body--wide">
+          <div class="skill-block">
+            <h2 id="about-skill-title">A skill to turn scattered notes into your own <code>About.md</code>.</h2>
+            <p>
+              Most people already have the raw material for an <code>About</code>: values, preferences, goals,
+              voice notes, old bios, personal rules, and fragments from previous prompts. The skill should turn that
+              messy input into a clear first draft that still feels authored by the person.
+            </p>
+            <div class="skill-grid">
+              <article class="skill-card">
+                <p class="skill-card__label">Give it</p>
+                <h3>Fragments, not perfection.</h3>
+                <ul class="skill-list">
+                  <li>Short notes about identity, work, style, and boundaries.</li>
+                  <li>Examples of decisions, principles, or recurring preferences.</li>
+                  <li>Existing docs that already describe the person imperfectly.</li>
+                </ul>
+              </article>
+              <article class="skill-card skill-card--accent">
+                <p class="skill-card__label">It returns</p>
+                <h3>A structured draft you can inspect.</h3>
+                <ul class="skill-list">
+                  <li>A readable <code>About.md</code> with identity, direction, and rules separated cleanly.</li>
+                  <li>Language that stays explicit instead of sounding like generic assistant copy.</li>
+                  <li>Open gaps marked clearly so the human can refine them fast.</li>
+                </ul>
+              </article>
+              <article class="skill-card">
+                <p class="skill-card__label">Why it matters</p>
+                <h3>Starting is the hard part.</h3>
+                <ul class="skill-list">
+                  <li>Without a draft, most people never create the stable layer at all.</li>
+                  <li>With a draft, the job becomes editorial: keep, remove, sharpen, own.</li>
+                  <li>The result is a durable base any agent can read before acting.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="why-title">
         <p class="section__label">Why This Shape</p>
         <div class="section__body">
@@ -503,9 +639,9 @@ Archive</pre>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="agent-title">
+      <section class="section section--feature" aria-labelledby="agent-title">
         <p class="section__label">Agent Use</p>
-        <div class="section__body">
+        <div class="section__body section__body--wide">
           <h2 id="agent-title">How an agent should use it.</h2>
           <div class="steps">
             <article class="step">
@@ -540,9 +676,9 @@ Archive</pre>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="now-title">
+      <section class="section section--feature" aria-labelledby="now-title">
         <p class="section__label">Why Now</p>
-        <div class="section__body">
+        <div class="section__body section__body--wide">
           <h2 id="now-title">Model advances make the current layer easy to maintain.</h2>
           <p>
             Thanks to recent improvements in the models themselves, refreshing <code>Now</code> is no longer the hard
@@ -563,9 +699,52 @@ Archive</pre>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="adoption-title">
+      <section class="section section--feature" aria-labelledby="now-skill-title">
+        <p class="section__label">Now Skill</p>
+        <div class="section__body section__body--wide">
+          <div class="skill-block">
+            <h2 id="now-skill-title">A skill to refresh <code>Now.md</code> from what actually changed this week.</h2>
+            <p>
+              The current layer should be cheap to update. A dedicated skill can review recent conversations,
+              tasks, project notes, and calendar signals, then rewrite <code>Now.md</code> so priorities, risks,
+              and next steps stay current without forcing the user to start from zero every time.
+            </p>
+            <div class="skill-grid">
+              <article class="skill-card">
+                <p class="skill-card__label">Reads from</p>
+                <h3>Recent activity and momentum.</h3>
+                <ul class="skill-list">
+                  <li>Last conversations, task lists, working notes, and recent project updates.</li>
+                  <li>Signals about what moved, what stalled, and what became urgent.</li>
+                  <li>Existing <code>Now.md</code> so continuity is preserved instead of reset.</li>
+                </ul>
+              </article>
+              <article class="skill-card skill-card--accent">
+                <p class="skill-card__label">Updates</p>
+                <h3>A current layer that stays operational.</h3>
+                <ul class="skill-list">
+                  <li>Top of mind, active projects, next steps, risks, and opportunities.</li>
+                  <li>Clear wording that reflects the latest state, not generic summaries.</li>
+                  <li>Minimal edits to keep the file light enough to maintain continuously.</li>
+                </ul>
+              </article>
+              <article class="skill-card">
+                <p class="skill-card__label">Why it matters</p>
+                <h3>If <code>Now</code> goes stale, the system drifts.</h3>
+                <ul class="skill-list">
+                  <li>The biggest failure mode is not complexity. It is neglect.</li>
+                  <li>When updates are cheap, the system remains useful across agents and tools.</li>
+                  <li>That is what turns the format into living context instead of archived notes.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--feature" aria-labelledby="adoption-title">
         <p class="section__label">Adoption</p>
-        <div class="section__body">
+        <div class="section__body section__body--wide">
           <h2 id="adoption-title">Start smaller than you think.</h2>
           <p>
             You do not need a perfect personal operating system to begin. A short <code>About.md</code>, a minimal
@@ -580,10 +759,6 @@ Archive</pre>
 
       <footer class="footer">
         <a href="mailto:hello@aboutnowdata.com">hello@aboutnowdata.com</a>
-        <div class="footer__links">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-        </div>
       </footer>
     </main>
   </body>
