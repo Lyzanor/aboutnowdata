@@ -2,3 +2,5 @@
 output/
 .vercel/
 .vercel
+.claude/
+.DS_Store

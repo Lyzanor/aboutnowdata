@@ -1,35 +1,69 @@
 # About Now Data
 
-Static single-file site for the About Now Data framework.
+*An agentic system, built for real people.*
 
-## Structure
+Memory systems with context you can inspect line by line.
 
-- `index.html`: the whole site. HTML, CSS, JS, and the client-side `.zip` download all live here.
-- `learn.html`: explanation page for the About Now Data system.
-- `LICENSE`: repository license.
+## Links
 
-## Update Guide
+- [Live site](https://aboutnowdata.vercel.app)
+- [Explanation](https://aboutnowdata.vercel.app/learn.html)
+- [Examples](https://aboutnowdata.vercel.app/examples.html)
+- [MIT License](./LICENSE)
 
-Most future edits should happen in one place inside [index.html](/Users/lyzanor/Documents/Me/Data/Projects/Invento%20de%20la%20IA/Data/Web%20About%20Now%20Data/Data/Github%20-%20About%20Now%20Data/index.html):
+## What It Is
 
-- Search for `const HERO_CARDS = [` in the script near the bottom.
-- Each card object controls:
-  - tab label
-  - file or folder label
-  - editable content
-  - contextual description shown below the stack
-  - copy behavior
+About Now Data is a simple memory system based on Markdown.
 
-If you need to change the homepage copy outside the interactive stack:
+It keeps identity, current priorities, and durable knowledge separate enough to remain legible for both humans and agents.
 
-- edit the hero text directly in the HTML section near the top
-- edit the lower sections (`What it is`, `Feedback`, footer) directly in the markup
+The goal is not just better memory inference. The goal is memory that stays inspectable, editable, portable, and focused.
 
-## Design Notes
+## Three Layers
 
-- The hero stack is rendered from `HERO_CARDS` so content is not duplicated across HTML and JS.
-- The active card grows, becomes editable, and drives the detail panel below it.
-- Copy buttons always read the live edited content, not a stale template.
+### `About.md`
+
+Stable, defining, foundational.
+
+This is where identity, values, rules, and boundaries live.
+
+### `Now.md`
+
+Brief, current, actionable.
+
+This is where active priorities, recent activity, next steps, risks, and opportunities live.
+
+### `Data/`
+
+Structured depth.
+
+This is where projects, references, notes, tools, and supporting detail live without polluting the core.
+
+## Starter Shape
+
+```text
+About.md
+Now.md
+Data/
+```
+
+Minimal by design.
+
+One About file. One Now file. One Data folder.
+
+## This Repository
+
+This repo contains the public site for About Now Data.
+
+```text
+index.html      Home
+learn.html      Explanation
+examples.html   Examples
+shared.css      Shared styling
+LICENSE         MIT license
+```
+
+The site is intentionally lightweight and static.
 
 ## Local Preview
 
@@ -41,20 +75,30 @@ python3 -m http.server 4173
 
 Then open:
 
-```bash
+```text
 http://127.0.0.1:4173/index.html
 ```
 
 ## Deploy
 
-GitHub:
-
-```bash
-git push origin main
-```
-
-Vercel production:
+Production deploy:
 
 ```bash
 vercel deploy --prod -y
 ```
+
+## Why It Exists
+
+Most memory systems optimize for hidden capture, silent consolidation, and black-box recall.
+
+About Now Data takes the opposite position.
+
+Memory should be legible.
+
+Stable context and changing context should not be mixed.
+
+Human control matters more than hidden cleverness.
+
+## License
+
+MIT

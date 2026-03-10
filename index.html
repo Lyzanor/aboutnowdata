@@ -4,9 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Now Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Rethink+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+      rel="stylesheet"
+    />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cpath d='M19 48V16h13.5c8.7 0 14.5 6.2 14.5 16s-5.8 16-14.5 16H19zm7-6h5.8c4.9 0 8.1-3.9 8.1-10s-3.2-10-8.1-10H26v20z' fill='%23ffffff'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cg fill='%23ffffff'%3E%3Crect x='9' y='18' width='4' height='28' rx='1'/%3E%3Crect x='17' y='18' width='4' height='28' rx='1'/%3E%3Crect x='5' y='24' width='20' height='4' rx='1'/%3E%3Crect x='5' y='36' width='20' height='4' rx='1'/%3E%3Crect x='28' y='18' width='4' height='28' rx='1'/%3E%3Crect x='36' y='18' width='4' height='28' rx='1'/%3E%3Crect x='24' y='24' width='20' height='4' rx='1'/%3E%3Crect x='24' y='36' width='20' height='4' rx='1'/%3E%3Crect x='47' y='20' width='12' height='24' rx='1.5'/%3E%3C/g%3E%3C/svg%3E"
     />
     <style>
       :root {
@@ -22,6 +32,10 @@
         --radius: 22px;
         --nav-pad: clamp(1.25rem, 2vw, 2rem);
         --content-width: 1180px;
+        --font-sans: "Rethink Sans", "Segoe UI", sans-serif;
+        --font-display: "Rethink Sans", "Segoe UI", sans-serif;
+        --font-mono: "DM Mono", ui-monospace, monospace;
+        --ease: cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       * {
@@ -39,7 +53,7 @@
           radial-gradient(circle at top left, rgba(5, 5, 5, 0.03), transparent 34%),
           linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
         color: var(--fg);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: var(--font-sans);
         text-rendering: optimizeLegibility;
       }
 
@@ -60,7 +74,7 @@
       .page {
         width: min(calc(100% - 2rem), var(--content-width));
         margin: 0 auto;
-        padding: 6rem 0 2.5rem;
+        padding: 4.5rem 0 2.5rem;
       }
 
       .nav {
@@ -85,13 +99,46 @@
 
       .nav__brand,
       .nav__link {
-        font-size: 0.9rem;
-        letter-spacing: 0.06em;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
       .nav__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.78rem;
         font-weight: 650;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        color: var(--fg);
+      }
+
+      .brand-mark__hash {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.14em;
+        line-height: 1;
+      }
+
+      .brand-mark__block {
+        width: 0.78rem;
+        height: 0.78rem;
+        background: currentColor;
+      }
+
+      .brand-text {
+        letter-spacing: 0.1em;
+      }
+
+      .nav__links {
+        display: flex;
+        gap: 1.5rem;
       }
 
       .nav__link {
@@ -102,9 +149,9 @@
         display: grid;
         grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
         gap: clamp(2.5rem, 5vw, 5.5rem);
-        align-items: center;
-        min-height: calc(100vh - 9rem);
-        padding: 2rem 0 4rem;
+        align-items: start;
+        min-height: auto;
+        padding: 0.75rem 0 3.2rem;
       }
 
       .hero__copy {
@@ -113,6 +160,7 @@
 
       .eyebrow {
         margin: 0 0 1rem;
+        font-family: var(--font-mono);
         font-size: 0.78rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
@@ -121,9 +169,10 @@
 
       h1 {
         margin: 0;
+        font-family: var(--font-display);
         font-size: clamp(3.2rem, 10vw, 7.2rem);
         line-height: 0.94;
-        letter-spacing: -0.06em;
+        letter-spacing: -0.02em;
         max-width: 10ch;
       }
 
@@ -138,6 +187,44 @@
         gap: 1rem;
         font-size: 0.98rem;
         line-height: 1.62;
+      }
+
+      .hero__body p {
+        margin: 0;
+      }
+
+      .hero__symbol {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.85em;
+        margin-right: 0.2em;
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 0.95em;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .hero__symbol--block {
+        width: 0.62em;
+        height: 0.62em;
+        margin-right: 0.42em;
+        background: currentColor;
+        transform: translateY(-0.02em);
+      }
+
+      .hero__group {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .hero__group--tight {
+        gap: 0.15rem;
+      }
+
+      .hero__group--compact {
+        gap: 0.1rem;
       }
 
       .callout {
@@ -161,13 +248,13 @@
         align-items: stretch;
         justify-self: end;
         width: min(100%, 42rem);
-        padding: 0.5rem 1rem 0 0;
+        padding: 0 1rem 0 0;
       }
 
       .stack {
         position: relative;
         width: 100%;
-        min-height: 48rem;
+        min-height: 52rem;
         overflow: visible;
       }
 
@@ -206,12 +293,50 @@
 
       .stack__download,
       .card__action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
         flex-shrink: 0;
         color: var(--muted);
         font-size: 0.78rem;
         letter-spacing: 0.08em;
+        line-height: 1;
         text-transform: uppercase;
         transition: color 180ms ease, transform 180ms ease;
+      }
+
+      .icon-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        line-height: 1;
+      }
+
+      .material-symbols-outlined {
+        font-family: "Material Symbols Outlined";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.35rem;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+
+      .stack__download .material-symbols-outlined,
+      .icon-button .material-symbols-outlined {
+        font-size: 1.25rem;
       }
 
       .stack__download:hover,
@@ -352,13 +477,20 @@
       .card__copy:focus-visible,
       .cta:hover,
       .cta:focus-visible,
-      .learn-link:hover,
-      .learn-link:focus-visible,
       .footer a:hover,
       .footer a:focus-visible,
       .nav__link:hover,
       .nav__link:focus-visible {
         color: var(--fg);
+      }
+
+      .learn-link:hover,
+      .learn-link:focus-visible {
+        color: #ffffff;
+        border-color: rgba(31, 122, 77, 0.34);
+        background: linear-gradient(180deg, #1f7a4d, #17623d);
+        box-shadow: 0 22px 46px rgba(31, 122, 77, 0.2);
+        transform: translateY(-2px);
       }
 
       .card__copy:hover,
@@ -395,6 +527,30 @@
 
       .card--data pre {
         color: rgba(5, 5, 5, 0.62);
+      }
+
+      /* ── Markdown syntax highlighting ── */
+      .md-h {
+        font-weight: 700;
+        color: var(--fg);
+      }
+
+      .card__content b {
+        font-weight: 700;
+        color: #6b3a2a;
+      }
+
+      .md-em {
+        font-style: italic;
+        color: #a0522d;
+      }
+
+      .md-link {
+        color: #7b3ba1;
+      }
+
+      .md-url {
+        color: #8b7355;
       }
 
       .stack__detail {
@@ -455,6 +611,9 @@
 
       .cta {
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
         padding-bottom: 0.15rem;
         color: var(--muted);
       }
@@ -499,7 +658,8 @@
 
       .section__label {
         margin: 0;
-        font-size: 0.82rem;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--muted);
@@ -515,9 +675,10 @@
 
       .section h2 {
         margin: 0 0 1rem;
+        font-family: var(--font-display);
         font-size: clamp(1.9rem, 4vw, 3rem);
         line-height: 1.06;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
       }
 
       .section p {
@@ -529,9 +690,27 @@
       .learn-link {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-top: 1.5rem;
-        color: var(--muted);
+        justify-content: center;
+        gap: 0.7rem;
+        margin-top: 2.4rem;
+        padding: 1rem 1.35rem;
+        border: 1px solid rgba(31, 122, 77, 0.22);
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.14), rgba(31, 122, 77, 0.08)),
+          rgba(255, 255, 255, 0.98);
+        color: var(--accent);
+        box-shadow: 0 16px 40px rgba(31, 122, 77, 0.12);
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
       }
 
       .visual-story {
@@ -551,6 +730,17 @@
         box-shadow: var(--shadow);
       }
 
+      .visual-story__hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(5, 5, 5, 0.1) 0.8px, transparent 0.8px);
+        background-size: 10px 10px;
+        opacity: 0.14;
+        mask-image: linear-gradient(135deg, transparent 20%, black 80%);
+        pointer-events: none;
+      }
+
       .visual-story__hero::after {
         content: "";
         position: absolute;
@@ -564,6 +754,7 @@
 
       .visual-story__eyebrow {
         margin: 0 0 0.85rem;
+        font-family: var(--font-mono);
         font-size: 0.78rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
@@ -578,16 +769,21 @@
       .principles {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 1px;
         margin-top: 1.75rem;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
       }
 
       .principle {
         padding: 1.1rem 1rem 1.15rem;
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.76);
+        border: 0;
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(12px);
+        transition: background-color 150ms var(--ease);
       }
 
       .principle__icon {
@@ -600,7 +796,8 @@
         border: 1px solid var(--line-strong);
         border-radius: 0.85rem;
         background: rgba(255, 255, 255, 0.92);
-        font-size: 0.88rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
@@ -608,8 +805,9 @@
       .principle h3,
       .pathway h3 {
         margin: 0;
+        font-family: var(--font-display);
         font-size: 1.1rem;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
       }
 
       .principle p {
@@ -622,14 +820,19 @@
       .pathways {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.2rem;
+        gap: 1px;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
       }
 
       .pathway {
         padding: 1.4rem;
-        border: 1px solid var(--line);
-        border-radius: calc(var(--radius) + 2px);
-        background: rgba(255, 255, 255, 0.76);
+        border: 0;
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.92);
+        transition: background-color 150ms var(--ease);
       }
 
       .pathway--new {
@@ -641,7 +844,8 @@
 
       .pathway__label {
         margin: 0 0 0.85rem;
-        font-size: 0.82rem;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--muted);
@@ -672,7 +876,8 @@
         height: 2rem;
         border: 1px solid var(--line-strong);
         border-radius: 0.7rem;
-        font-size: 0.96rem;
+        font-family: var(--font-mono);
+        font-size: 0.84rem;
         font-weight: 600;
       }
 
@@ -695,32 +900,49 @@
         color: var(--accent);
       }
 
-      .visual-story .learn-link {
-        margin-top: 0.2rem;
+      .principle:hover,
+      .pathway:hover {
+        background: #ffffff;
       }
 
-      .testimonial-shell {
-        min-height: 10rem;
-        border: 1px dashed var(--line-strong);
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.5);
+      .visual-story .learn-link {
+        margin-top: 0.8rem;
       }
 
       .footer {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: space-between;
-        gap: 1rem;
+        align-items: center;
+        gap: 1.25rem;
         padding: 2rem 0 0.5rem;
         border-top: 1px solid var(--line);
         color: var(--muted);
         font-size: 0.94rem;
       }
 
-      .footer__links {
+      .footer__social {
         display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .footer__social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .footer__icon {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .footer__credit {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
       }
 
       .status {
@@ -766,7 +988,7 @@
 
         .hero {
           min-height: auto;
-          padding-top: 1rem;
+          padding-top: 0.5rem;
         }
 
         .hero__stack {
@@ -775,7 +997,7 @@
         }
 
         .stack {
-          min-height: 47rem;
+          min-height: 50rem;
         }
 
         .principles,
@@ -787,7 +1009,7 @@
       @media (max-width: 640px) {
         .page {
           width: min(calc(100% - 1.25rem), var(--content-width));
-          padding-top: 5rem;
+          padding-top: 4rem;
         }
 
         .nav {
@@ -800,12 +1022,16 @@
           font-size: 0.78rem;
         }
 
+        .nav__links {
+          gap: 1rem;
+        }
+
         h1 {
           max-width: none;
         }
 
         .stack {
-          min-height: 43rem;
+          min-height: 46rem;
         }
 
         .hero__stack {
@@ -840,6 +1066,10 @@
           text-align: left;
         }
 
+        .learn-link {
+          width: 100%;
+        }
+
         .principles,
         .pathways {
           grid-template-columns: 1fr;
@@ -851,7 +1081,7 @@
         }
 
         .footer {
-          flex-direction: column;
+          flex-wrap: wrap;
         }
 
         .stack[data-active="about"] .card--about,
@@ -890,8 +1120,17 @@
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
-      <a class="nav__brand" href="index.html">About Now Data</a>
-      <a class="nav__link" href="learn.html">Explanation</a>
+      <a class="nav__brand" href="index.html" aria-label="About Now Data">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="brand-mark__hash">##</span>
+          <span class="brand-mark__block"></span>
+        </span>
+        <span class="brand-text">About Now Data</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="learn.html">Explanation</a>
+        <a class="nav__link" href="examples.html">Examples</a>
+      </div>
     </nav>
 
     <main class="page">
@@ -899,29 +1138,34 @@
         <div class="hero__copy">
           <p class="eyebrow">Personal memory framework</p>
           <h1 id="home-title">About Now Data</h1>
-          <p class="tagline">A human-centered agentic system</p>
+          <p class="tagline">An agentic system, built for real people</p>
 
           <div class="hero__body">
-            <p>About holds who you are. Now holds what matters today. Data holds what you know.</p>
-            <p>Any agent reads exactly what you wrote before it acts. No inference. No drift. No surprises.</p>
-            <div>
-              <p class="section__label">Why not automatic memory</p>
-              <p>
-                Most memory systems infer and consolidate silently. You don't see what they store.
-              </p>
-              <p>This is the opposite. You write it. You own it.</p>
+            <div class="hero__group hero__group--tight">
+              <p><span class="hero__symbol">#</span><strong>About</strong> holds who you are.</p>
+              <p><span class="hero__symbol">#</span><strong>Now</strong> holds what matters.</p>
+              <p><span class="hero__symbol hero__symbol--block" aria-hidden="true"></span><strong>Data</strong> holds what you have.</p>
+            </div>
+            <div class="hero__group hero__group--compact">
+              <p>Before it acts, any agent reads exactly what you want.</p>
+              <p>You write it.</p>
+              <p>You decide it.</p>
+              <p>You own it.</p>
             </div>
           </div>
 
           <aside class="callout" aria-label="Principle">
-            <p>Don't make humans learn the system. Make the system understand the human.</p>
+            <p>Because a memory you can't read isn't a memory—it's just noise.</p>
           </aside>
         </div>
 
         <div class="hero__stack">
           <div class="stack__topbar">
             <div class="stack__tabs" id="stack-tabs" role="tablist" aria-label="Framework files"></div>
-            <button class="stack__download" id="download-active" type="button">Download .zip</button>
+            <button class="stack__download" id="download-active" type="button" aria-label="Download .zip" title="Download .zip">
+              Download
+              <span class="material-symbols-outlined" aria-hidden="true">download_for_offline</span>
+            </button>
           </div>
           <div class="stack" id="stack" aria-label="Framework starter files" data-active="about"></div>
 
@@ -944,104 +1188,48 @@
             <span aria-hidden="true">·</span>
             <button class="cta" type="button" data-copy-key="now" data-status-target="now-status">Copy Now.md</button>
             <span aria-hidden="true">·</span>
-            <button class="cta" id="download-zip" type="button">Download .zip</button>
+            <button class="cta icon-button" id="download-zip" type="button" aria-label="Download .zip" title="Download .zip">
+              <span>Download</span>
+              <span class="material-symbols-outlined" aria-hidden="true">download_for_offline</span>
+            </button>
           </div>
           <p class="hero__support">The .zip includes both files and an empty Data/ folder.</p>
         </div>
       </section>
 
       <section class="section section--feature" aria-labelledby="what-it-is-title">
-        <p class="section__label">How it works</p>
         <div class="section__content section__content--visual">
           <div class="visual-story">
             <div class="visual-story__hero">
               <p class="visual-story__eyebrow">Readable by humans. Reliable for agents.</p>
-              <h2 id="what-it-is-title">Replace hidden memory systems with context you can inspect line by line.</h2>
+              <h2 id="what-it-is-title">Memory systems with context you can inspect line by line.</h2>
               <p class="visual-story__lede">
-                About Now Data keeps identity, current state, and durable knowledge separate. The result is faster
-                onboarding, less drift, and much clearer agent behavior.
+                About Now Data keeps identity, current state, and durable knowledge separate. The result is an
+                easy-to-use memory system, auditable by everyone, and much clearer agent behavior.
               </p>
 
               <div class="principles" aria-label="Core principles">
                 <article class="principle">
-                  <div class="principle__icon" aria-hidden="true">01</div>
-                  <h3>Zero hidden memory</h3>
-                  <p>Nothing is silently inferred or rewritten behind your back.</p>
+                  <div class="principle__icon" aria-hidden="true">◎</div>
+                  <h3>Easiest memory system</h3>
+                  <p>No registration. One-click installation. Easy to set up, with only two files and one folder.</p>
                 </article>
                 <article class="principle">
-                  <div class="principle__icon" aria-hidden="true">02</div>
-                  <h3>Zero format lock-in</h3>
+                  <div class="principle__icon" aria-hidden="true">◇</div>
+                  <h3>Universal format</h3>
                   <p>Plain Markdown files stay portable across tools, agents, and teams.</p>
                 </article>
                 <article class="principle">
-                  <div class="principle__icon" aria-hidden="true">03</div>
-                  <h3>Zero stale context</h3>
-                  <p>What changes today lives in `Now.md`, not buried in old chats.</p>
+                  <div class="principle__icon" aria-hidden="true">✦</div>
+                  <h3>Just the right context</h3>
+                  <p>Zero bloat. Noise-free agentic memory. Only essential context (About.md) and real-time master guidelines (Now.md) to work with your Data.</p>
                 </article>
                 <article class="principle">
-                  <div class="principle__icon" aria-hidden="true">04</div>
-                  <h3>Zero ambiguity</h3>
-                  <p>Agents read the same explicit context that humans can review and edit.</p>
+                  <div class="principle__icon" aria-hidden="true">↺</div>
+                  <h3>On your own terms</h3>
+                  <p>Update however and whenever you choose. Manual triggers, weekly intervals, or fully autonomous agent updates.</p>
                 </article>
               </div>
-            </div>
-
-            <div class="pathways" aria-label="Comparison">
-              <article class="pathway pathway--old">
-                <p class="pathway__label">The usual setup</p>
-                <h3>Context gets rebuilt every time.</h3>
-                <div class="steps">
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">1</div>
-                    <div class="step__body">
-                      <p>Explain yourself again</p>
-                      <p>Identity, preferences, and constraints stay trapped in chat history.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">2</div>
-                    <div class="step__body">
-                      <p>Hope the model infers the right things</p>
-                      <p>Important context gets summarized, compressed, or guessed.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">3</div>
-                    <div class="step__body">
-                      <p>Correct drift after the fact</p>
-                      <p>You only notice the mismatch once the agent has already acted.</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="pathway pathway--new">
-                <p class="pathway__label">With About Now Data</p>
-                <h3>The agent starts from explicit context.</h3>
-                <div class="steps">
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">1</div>
-                    <div class="step__body">
-                      <p>Write the stable layer once</p>
-                      <p>`About.md` defines identity, principles, voice, and boundaries.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">2</div>
-                    <div class="step__body">
-                      <p>Update only what changed today</p>
-                      <p>`Now.md` keeps priorities, risks, and momentum current.</p>
-                    </div>
-                  </div>
-                  <div class="step">
-                    <div class="step__index" aria-hidden="true">3</div>
-                    <div class="step__body">
-                      <p>Let any agent read before acting</p>
-                      <p>Behavior becomes inspectable, editable, and easier to trust.</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
             </div>
 
             <a class="learn-link" href="learn.html">Learn more →</a>
@@ -1049,18 +1237,34 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="feedback-title">
-        <p class="section__label">Feedback</p>
-        <div class="section__content">
-          <h2 id="feedback-title">Testimonials and notes from use.</h2>
-          <div class="testimonial-shell">
-            <!-- testimonials -->
-          </div>
-        </div>
-      </section>
-
       <footer class="footer">
-        <a href="mailto:hello@aboutnowdata.com">hello@aboutnowdata.com</a>
+        <p class="footer__credit">Demanding a better clarity for the future | Lyzanor</p>
+        <div class="footer__social" aria-label="Links">
+          <a class="footer__social-link" href="mailto:lyzanor@gmail.com" aria-label="Email">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M3 5.75A2.75 2.75 0 0 1 5.75 3h12.5A2.75 2.75 0 0 1 21 5.75v12.5A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25V5.75Zm2.2-.25 6.8 5.44 6.8-5.44H5.2Zm14.3 1.28-6.87 5.49a1 1 0 0 1-1.25 0L4.5 6.78v11.47c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V6.78Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://github.com/Lyzanor/aboutnowdata" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.59 2 12.25c0 4.52 2.87 8.35 6.84 9.7.5.1.66-.22.66-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.2-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.1 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.31.1-2.74 0 0 .84-.28 2.75 1.06A9.3 9.3 0 0 1 12 6.93c.85 0 1.71.12 2.51.35 1.91-1.34 2.75-1.06 2.75-1.06.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.77 0 3.96-2.34 4.83-4.57 5.09.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.17.59.67.49A10.25 10.25 0 0 0 22 12.25C22 6.59 17.52 2 12 2Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://x.com/lyzanor" target="_blank" rel="noreferrer" aria-label="X">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M18.244 2H21l-6.02 6.88L22 22h-5.48l-4.3-7.91L5.3 22H2.54l6.44-7.37L2 2h5.62l3.89 7.26L18.244 2Zm-.97 18h1.53L6.8 3.9H5.16L17.274 20Z"
+              />
+            </svg>
+          </a>
+        </div>
       </footer>
     </main>
 
@@ -1079,28 +1283,36 @@
           editHint: "Click into the file body to edit the text directly.",
           copyable: true,
           headerMeta: "copy",
-          content: `About
-- [] Stable, defining, foundational.
-Last updated: YYYY-MM-DD
+          content: `# About — [*You or your Project*]
+Stable, defining, foundational.
+*Last updated: YYYY-MM-DD*
 
-## Identity / Description
-About:
-- []
-Name / Team:
-- []
-Voice / Style:
-- []
+## System
+- **[About](./About.md)**: foundational context
+— **[Now](./Now.md)**: current state
+— **[Data](./Data/)**: details and projects
+
+## Identity
+**About**: [*Insert a brief description of yourself or your project*]
+**Name / Team**: [*Insert your name, team, or project name*]
+**Style**: [*Describe how you want to communicate*]
+**Interests**:
+  — [*Add a recurring idea, theme, or interest*]
+  — [*Add another defining idea if useful*]
 
 ## Direction
-Values:
-- []
-Goals:
-- []
-
-## Rules Principles
-- []
-Boundaries:
-- []`
+**Values**:
+  — [*Add a principle that should guide decisions*]
+  — [*Add another value if needed*]
+**Goals**:
+  — [*Add a medium-term goal*]
+  — [*Add another active direction or outcome*]
+**Rules**
+  — [*Add a rule the system or others should respect*]
+  — [*Add another operational rule if needed*]
+**Boundaries:**
+  — [*Add a clear boundary or red line*]
+  — [*Add another limit if needed*]`
         },
         {
           key: "now",
@@ -1113,25 +1325,25 @@ Boundaries:
           editHint: "Click into the file body to edit the text directly.",
           copyable: true,
           headerMeta: "copy",
-          content: `Now
-- [] Brief, current, actionable.
-Last updated: YYYY-MM-DD
+          content: `# Now — [*You or your Project*]
+Brief, current, actionable.
+*Last updated: YYYY-MM-DD*
 
 ## Status
-Top of mind:
-- []
-Active projects:
-- []
+**Top of mind**:
+  — [*What matters most right now?*]
+**Active projects**:
+  — [*Location of the Project folders (with his own About Now Data) that you are actively working on*]
 
 ## Context
-Recent activity:
-- []
-Next steps:
-- []
-Risks:
-- []
-Opportunities:
-- []`
+**Recent activity**:
+  — [*What have you done recently?*]
+**Next steps**:
+  — [*What do you plan to do next?*]
+**Risks**:
+  — [*What could block or derail progress?*]
+**Opportunities**:
+  — [*What might be worth exploring now?*]`
         },
         {
           key: "data",
@@ -1146,8 +1358,11 @@ Opportunities:
           headerMeta: "Directory",
           content: `Data/
 ├── Notes.md
+├── Skills.md
 ├── Projects/
-│ └── ...
+│ ├── (About.md)
+│ ├── (Now.md)
+│ └── Data/
 ├── Tools.md
 └── whatever you need`
         }
@@ -1205,6 +1420,109 @@ Opportunities:
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
+      }
+
+      function getCaretOffset(el) {
+        const sel = window.getSelection();
+        if (!sel.rangeCount) return 0;
+        const range = sel.getRangeAt(0).cloneRange();
+        const pre = document.createRange();
+        pre.selectNodeContents(el);
+        pre.setEnd(range.startContainer, range.startOffset);
+        return pre.toString().length;
+      }
+
+      function getSelectionOffsets(el) {
+        const sel = window.getSelection();
+        const textLength = el.textContent.length;
+
+        if (!sel.rangeCount) {
+          return { start: textLength, end: textLength };
+        }
+
+        const range = sel.getRangeAt(0).cloneRange();
+
+        if (!el.contains(range.startContainer) || !el.contains(range.endContainer)) {
+          return { start: textLength, end: textLength };
+        }
+
+        const startRange = document.createRange();
+        startRange.selectNodeContents(el);
+        startRange.setEnd(range.startContainer, range.startOffset);
+
+        const endRange = document.createRange();
+        endRange.selectNodeContents(el);
+        endRange.setEnd(range.endContainer, range.endOffset);
+
+        return {
+          start: startRange.toString().length,
+          end: endRange.toString().length
+        };
+      }
+
+      function setCaretOffset(el, offset) {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let pos = 0;
+        while (walker.nextNode()) {
+          const len = walker.currentNode.textContent.length;
+          if (pos + len >= offset) {
+            range.setStart(walker.currentNode, offset - pos);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+            return;
+          }
+          pos += len;
+        }
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      function syncHighlightedContent(el, offset = getCaretOffset(el)) {
+        el.innerHTML = highlightMarkdown(el.textContent);
+        setCaretOffset(el, offset);
+      }
+
+      function replaceSelectionText(el, text) {
+        const { start, end } = getSelectionOffsets(el);
+        const currentText = el.textContent;
+        const nextText = currentText.slice(0, start) + text + currentText.slice(end);
+        el.innerHTML = highlightMarkdown(nextText);
+        setCaretOffset(el, start + text.length);
+      }
+
+      function highlightMarkdown(text) {
+        let html = text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        // Headers (full line)
+        html = html.replace(/^(#{1,6}\s.*)$/gm, '<span class="md-h">$1</span>');
+
+        // Bold + Link: **[text](url)**
+        html = html.replace(
+          /\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/g,
+          '<b>**[<span class="md-link">$1</span>](<span class="md-url">$2</span>)**</b>'
+        );
+
+        // Bold: **text**
+        html = html.replace(
+          /\*\*([^*]+?)\*\*/g,
+          "<b>**$1**</b>"
+        );
+
+        // Italic: *text*
+        html = html.replace(
+          /(?<!\*)\*([^*\n]+?)\*(?!\*)/g,
+          '<em class="md-em">*$1*</em>'
+        );
+
+        return html;
       }
 
       function createElement(tagName, className, textContent) {
@@ -1265,16 +1583,34 @@ Opportunities:
             actions.appendChild(createElement("span", "", card.headerMeta));
           }
 
-          const downloadButton = createElement("button", "card__action", card.key === "data" ? "Download zip" : "Download");
+          const downloadButton = createElement("button", "card__action icon-button");
           downloadButton.type = "button";
           downloadButton.dataset.downloadKey = card.key;
+          downloadButton.setAttribute("aria-label", card.key === "data" ? "Download zip" : "Download");
+          downloadButton.title = card.key === "data" ? "Download zip" : "Download";
+          const downloadIcon = createElement("span", "material-symbols-outlined", "download_for_offline");
+          downloadIcon.setAttribute("aria-hidden", "true");
+          downloadButton.appendChild(downloadIcon);
           actions.appendChild(downloadButton);
           header.appendChild(actions);
 
           const body = createElement("div", "card__body");
-          const content = createElement("pre", "card__content", card.content);
+          const content = createElement("pre", "card__content");
           content.id = card.key + "-content";
           content.setAttribute("spellcheck", "false");
+          content.innerHTML = highlightMarkdown(card.content);
+
+          content.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.isComposing) {
+              e.preventDefault();
+              replaceSelectionText(content, "\n");
+            }
+          });
+
+          content.addEventListener("input", () => {
+            syncHighlightedContent(content);
+          });
+
           body.appendChild(content);
 
           article.appendChild(header);
@@ -1314,6 +1650,7 @@ Opportunities:
           card.addEventListener("focus", activate);
           card.addEventListener("click", activate);
           card.addEventListener("keydown", (event) => {
+            if (event.target.closest("[contenteditable='true']")) return;
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
               activate();

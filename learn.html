@@ -4,258 +4,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Explanation | About Now Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Rethink+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cpath d='M19 48V16h13.5c8.7 0 14.5 6.2 14.5 16s-5.8 16-14.5 16H19zm7-6h5.8c4.9 0 8.1-3.9 8.1-10s-3.2-10-8.1-10H26v20z' fill='%23ffffff'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cg fill='%23ffffff'%3E%3Crect x='9' y='18' width='4' height='28' rx='1'/%3E%3Crect x='17' y='18' width='4' height='28' rx='1'/%3E%3Crect x='5' y='24' width='20' height='4' rx='1'/%3E%3Crect x='5' y='36' width='20' height='4' rx='1'/%3E%3Crect x='28' y='18' width='4' height='28' rx='1'/%3E%3Crect x='36' y='18' width='4' height='28' rx='1'/%3E%3Crect x='24' y='24' width='20' height='4' rx='1'/%3E%3Crect x='24' y='36' width='20' height='4' rx='1'/%3E%3Crect x='47' y='20' width='12' height='24' rx='1.5'/%3E%3C/g%3E%3C/svg%3E"
     />
+    <link rel="stylesheet" href="shared.css" />
     <style>
-      :root {
-        --bg: #ffffff;
-        --fg: #050505;
-        --muted: #6f6f6f;
-        --accent: #1f7a4d;
-        --line: rgba(5, 5, 5, 0.16);
-        --line-strong: rgba(5, 5, 5, 0.28);
-        --surface: rgba(255, 255, 255, 0.76);
-        --surface-soft: #fafafa;
-        --radius: 22px;
-        --shadow: 0 24px 60px rgba(5, 5, 5, 0.08);
-        --content-width: 1180px;
-        --nav-pad: clamp(1.25rem, 2vw, 2rem);
+      /* ── learn.html: hero panel dot pattern ── */
+
+      .hero__panel {
+        position: relative;
+        overflow: hidden;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        background:
-          radial-gradient(circle at top left, rgba(5, 5, 5, 0.03), transparent 34%),
-          linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
-        color: var(--fg);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        text-rendering: optimizeLegibility;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .page {
-        width: min(calc(100% - 2rem), var(--content-width));
-        margin: 0 auto;
-        padding: 6rem 0 2.5rem;
-      }
-
-      .nav {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--nav-pad);
-        mix-blend-mode: multiply;
-      }
-
-      .nav::before {
+      .hero__panel::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-        z-index: -1;
+        background-image: radial-gradient(circle, rgba(5, 5, 5, 0.1) 0.8px, transparent 0.8px);
+        background-size: 10px 10px;
+        opacity: 0.12;
+        mask-image: linear-gradient(135deg, transparent 20%, black 85%);
         pointer-events: none;
       }
 
-      .nav__brand,
-      .nav__link {
-        font-size: 0.9rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .nav__brand {
-        font-weight: 650;
-      }
-
-      .nav__link {
-        color: var(--muted);
-      }
-
-      .nav__link:hover,
-      .nav__link:focus-visible,
-      .footer a:hover,
-      .footer a:focus-visible {
-        color: var(--fg);
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-        gap: clamp(2.5rem, 5vw, 5.5rem);
-        align-items: start;
-        min-height: calc(100vh - 10rem);
-        padding: 2rem 0 4rem;
-      }
-
-      .eyebrow {
-        margin: 0 0 1rem;
-        font-size: 0.78rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      h1 {
-        margin: 0;
-        font-size: clamp(3.2rem, 10vw, 7rem);
-        line-height: 0.94;
-        letter-spacing: -0.06em;
-      }
-
-      .hero__lead {
-        max-width: 36rem;
-        margin: 1.25rem 0 0;
-        font-size: clamp(1.08rem, 2vw, 1.4rem);
-        line-height: 1.55;
-        color: var(--muted);
-      }
-
-      .hero__summary {
-        display: grid;
-        gap: 1rem;
-        max-width: 32rem;
-        margin-top: 2rem;
-        font-size: 1rem;
-        line-height: 1.72;
-      }
-
-      .hero__panel {
-        display: grid;
-        gap: 1rem;
-        padding: 1.35rem;
-        border: 1px solid var(--line);
-        border-radius: calc(var(--radius) + 6px);
-        background: var(--surface);
-        backdrop-filter: blur(16px);
-        box-shadow: var(--shadow);
-      }
-
-      .quote {
-        margin: 0;
-        padding: 1.1rem 1.2rem;
-        border-left: 2px solid var(--fg);
-        background: rgba(255, 255, 255, 0.68);
-        font-size: clamp(1.05rem, 2vw, 1.35rem);
-        line-height: 1.5;
-      }
-
-      .panel-grid {
-        display: grid;
-        gap: 0.9rem;
-      }
-
-      .panel-grid__row {
-        display: grid;
-        grid-template-columns: minmax(7rem, 10rem) 1fr;
-        gap: 1rem;
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
-      }
-
-      .panel-grid__row:first-child {
-        padding-top: 0;
-        border-top: 0;
-      }
-
-      .panel-grid dt {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.84rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .panel-grid dd {
-        margin: 0;
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      .section {
-        display: grid;
-        grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
-        gap: clamp(2rem, 5vw, 5rem);
-        padding: 4rem 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .section--feature {
-        grid-template-columns: 1fr;
-        gap: 1.35rem;
-      }
-
-      .section__label {
-        margin: 0;
-        font-size: 0.82rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .section__body {
-        max-width: 48rem;
-      }
-
-      .section__body--wide {
-        max-width: none;
-      }
-
-      .section h2 {
-        margin: 0 0 1rem;
-        font-size: clamp(1.95rem, 4vw, 3rem);
-        line-height: 1.05;
-        letter-spacing: -0.05em;
-      }
-
-      .section p {
-        margin: 0;
-        font-size: 1rem;
-        line-height: 1.75;
-      }
-
-      .section__body > * + * {
-        margin-top: 1.2rem;
-      }
+      /* ── Three Layers grid ── */
 
       .layer-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 1px;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
       }
 
       .layer-card {
+        position: relative;
+        overflow: hidden;
         display: grid;
         gap: 1rem;
         min-height: 21rem;
         padding: 1.2rem 1.2rem 1.3rem;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border: 0;
+        border-radius: 0;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
         box-shadow: var(--shadow);
+        transition: background-color 150ms var(--ease);
+      }
+
+      .layer-card::before,
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        right: -2rem;
+        bottom: -2rem;
+        width: 10rem;
+        height: 10rem;
+        background-image: radial-gradient(circle, rgba(5, 5, 5, 0.12) 0.8px, transparent 0.8px);
+        background-size: 8px 8px;
+        opacity: 0.16;
+        pointer-events: none;
       }
 
       .layer-card h3 {
         margin: 0;
+        font-family: var(--font-display);
         font-size: 1.1rem;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
       }
 
       .layer-card p {
@@ -270,9 +93,9 @@
         color: var(--muted);
         white-space: pre-wrap;
         word-break: break-word;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 0.92rem;
-        line-height: 1.55;
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        line-height: 1.7;
       }
 
       .principle {
@@ -285,7 +108,8 @@
       .principle strong {
         display: block;
         margin-bottom: 0.4rem;
-        font-size: 0.82rem;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
       }
@@ -316,11 +140,13 @@
         height: 2.6rem;
         border: 1px solid var(--line);
         border-radius: 999px;
-        font-size: 0.92rem;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
       }
 
       .step h3 {
         margin: 0 0 0.35rem;
+        font-family: var(--font-display);
         font-size: 1.05rem;
         letter-spacing: -0.02em;
       }
@@ -344,19 +170,26 @@
       .skill-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 1px;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
       }
 
       .skill-card {
+        position: relative;
+        overflow: hidden;
         display: grid;
         align-content: start;
         gap: 0.85rem;
         min-height: 15rem;
         padding: 1.2rem 1.2rem 1.3rem;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border: 0;
+        border-radius: 0;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
         box-shadow: var(--shadow);
+        transition: background-color 150ms var(--ease);
       }
 
       .skill-card--accent {
@@ -368,6 +201,7 @@
 
       .skill-card__label {
         margin: 0;
+        font-family: var(--font-mono);
         font-size: 0.78rem;
         letter-spacing: 0.16em;
         text-transform: uppercase;
@@ -380,8 +214,9 @@
 
       .skill-card h3 {
         margin: 0;
+        font-family: var(--font-display);
         font-size: 1.12rem;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
       }
 
       .skill-list {
@@ -411,98 +246,260 @@
         opacity: 0.45;
       }
 
-      .footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 2rem 0 0.5rem;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 0.94rem;
+      .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
       }
 
-      .footer__links {
+      .comparison-card {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        gap: 1.35rem;
+        padding: 1.45rem;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
+        box-shadow: var(--shadow);
+      }
+
+      .comparison-card--accent {
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.08), rgba(255, 255, 255, 0.96) 30%),
+          rgba(255, 255, 255, 0.98);
+      }
+
+      .comparison-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(90deg, rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.06));
+      }
+
+      .comparison-card--accent::before {
+        background: linear-gradient(90deg, rgba(31, 122, 77, 0.8), rgba(31, 122, 77, 0.18));
+      }
+
+      .comparison-card__head {
+        display: grid;
+        gap: 0.7rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .comparison-card__label {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .comparison-card--accent .comparison-card__label {
+        color: var(--accent);
+      }
+
+      .comparison-card h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.24rem;
+        letter-spacing: -0.02em;
+      }
+
+      .comparison-card__tag {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        padding: 0.38rem 0.6rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .comparison-card--accent .comparison-card__tag {
+        border-color: rgba(31, 122, 77, 0.18);
+        color: var(--accent);
+      }
+
+      .section__body--airy > p + p {
+        margin-top: 1.5rem;
+      }
+
+      .workflow-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 0.75rem;
+        margin-top: 0.45rem;
       }
+
+      .workflow-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.9rem 1.15rem;
+        border: 1px solid rgba(31, 122, 77, 0.22);
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.12), rgba(31, 122, 77, 0.06)),
+          rgba(255, 255, 255, 0.98);
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        box-shadow: 0 14px 30px rgba(31, 122, 77, 0.1);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          background 180ms ease,
+          color 180ms ease;
+      }
+
+      .workflow-download:hover,
+      .workflow-download:focus-visible {
+        transform: translateY(-2px);
+        color: #ffffff;
+        background: linear-gradient(180deg, #1f7a4d, #17623d);
+        box-shadow: 0 20px 38px rgba(31, 122, 77, 0.18);
+      }
+
+      .workflow-download svg {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+      }
+
+      .workflow-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.9rem 1.15rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(5, 5, 5, 0.06);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .workflow-link:hover,
+      .workflow-link:focus-visible {
+        transform: translateY(-2px);
+        border-color: rgba(5, 5, 5, 0.28);
+        background: #ffffff;
+        box-shadow: 0 16px 30px rgba(5, 5, 5, 0.1);
+      }
+
+      .comparison-points {
+        display: grid;
+        gap: 0.95rem;
+      }
+
+      .comparison-point {
+        padding: 1.05rem 1.05rem 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      }
+
+      .comparison-card--accent .comparison-point {
+        border-color: rgba(31, 122, 77, 0.18);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .comparison-point h4 {
+        margin: 0 0 0.35rem;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        letter-spacing: -0.02em;
+      }
+
+      .comparison-point p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .layer-card:hover,
+      .skill-card:hover {
+        background: #ffffff;
+      }
+
+      /* ── Page-specific media queries ── */
 
       @media (max-width: 980px) {
-        .hero,
-        .section {
-          grid-template-columns: 1fr;
-        }
-
-        .hero {
-          min-height: auto;
-        }
-
-        .layer-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .skill-grid {
+        .layer-grid,
+        .skill-grid,
+        .comparison-grid {
           grid-template-columns: 1fr;
         }
       }
 
       @media (max-width: 640px) {
-        .page {
-          width: min(calc(100% - 1.25rem), var(--content-width));
-          padding-top: 5rem;
-        }
-
-        .nav {
-          padding: 1rem 0.625rem;
-        }
-
-        .nav__brand,
-        .nav__link {
-          font-size: 0.78rem;
-        }
-
-        .panel-grid__row,
         .step {
           grid-template-columns: 1fr;
-        }
-
-        .footer {
-          flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
-      <a class="nav__brand" href="index.html">About Now Data</a>
-      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__brand" href="index.html" aria-label="About Now Data">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="brand-mark__hash">##</span>
+          <span class="brand-mark__block"></span>
+        </span>
+        <span class="brand-text">About Now Data</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="examples.html">Examples</a>
+        <a class="nav__link" href="index.html">Home</a>
+      </div>
     </nav>
 
     <main class="page">
       <section class="hero" aria-labelledby="explanation-title">
         <div>
           <p class="eyebrow">Explanation</p>
-          <h1 id="explanation-title">A memory system built for humans first, and agents second.</h1>
+          <h1 id="explanation-title">An agentic system, built for real people</h1>
           <p class="hero__lead">
-            About Now Data is not an assistant feature. It is a simple operational model for keeping identity,
-            current priorities, and knowledge separate enough to remain legible.
+            About Now Data is a simple system based on Markdown. An agentic system that adapts to you, not the other
+            way around. It keeps identity, current priorities, and knowledge separated enough to remain legible.
           </p>
           <div class="hero__summary">
             <p>
-              <code>About</code> carries stable context: values, rules, identity, voice, boundaries.
-              <code>Now</code> carries what matters today: active priorities, recent context, next steps.
-              <code>Data</code> carries structured detail: notes, projects, references, tools.
+              The goal isn't just to improve memory inference; it's to make memory inspectable, editable, portable,
+              and focused for everyone.
             </p>
             <p>
-              The point is not to infer memory better. The point is to make memory inspectable, editable, portable,
-              and safe for agents to read before they act.
+              <code>About.md</code> carries stable context: values, rules, and identity. <code>Now.md</code> tracks
+              what matters today: active priorities and next steps. <code>Data</code> stores structured details:
+              projects, references, and the tools you work with.
             </p>
           </div>
         </div>
 
         <div class="hero__panel">
-          <p class="quote">Don't make humans learn the system. Make the system understand the human.</p>
+          <p class="quote">Because a memory you can't read isn't a memory—it's just noise.</p>
           <dl class="panel-grid">
             <div class="panel-grid__row">
               <dt>Base unit</dt>
@@ -545,9 +542,8 @@
               <pre>Identity
 Values
 Goals
-Principles
-Boundaries
-Voice / style</pre>
+Rules
+Boundaries</pre>
             </article>
             <article class="layer-card">
               <div>
@@ -568,7 +564,7 @@ Opportunities</pre>
               </div>
               <pre>Projects/
 Notes.md
-Sources.md
+Skills.md
 Tools.md
 References
 Archive</pre>
@@ -577,188 +573,178 @@ Archive</pre>
         </div>
       </section>
 
-      <section class="section section--feature" aria-labelledby="about-skill-title">
-        <p class="section__label">About Skill</p>
+      <section class="section section--feature" aria-labelledby="workflow-title">
+        <p class="section__label">Workflow</p>
         <div class="section__body section__body--wide">
-          <div class="skill-block">
-            <h2 id="about-skill-title">A skill to turn scattered notes into your own <code>About.md</code>.</h2>
-            <p>
-              Most people already have the raw material for an <code>About</code>: values, preferences, goals,
-              voice notes, old bios, personal rules, and fragments from previous prompts. The skill should turn that
-              messy input into a clear first draft that still feels authored by the person.
-            </p>
-            <div class="skill-grid">
-              <article class="skill-card">
-                <p class="skill-card__label">Give it</p>
-                <h3>Fragments, not perfection.</h3>
-                <ul class="skill-list">
-                  <li>Short notes about identity, work, style, and boundaries.</li>
-                  <li>Examples of decisions, principles, or recurring preferences.</li>
-                  <li>Existing docs that already describe the person imperfectly.</li>
-                </ul>
-              </article>
-              <article class="skill-card skill-card--accent">
-                <p class="skill-card__label">It returns</p>
-                <h3>A structured draft you can inspect.</h3>
-                <ul class="skill-list">
-                  <li>A readable <code>About.md</code> with identity, direction, and rules separated cleanly.</li>
-                  <li>Language that stays explicit instead of sounding like generic assistant copy.</li>
-                  <li>Open gaps marked clearly so the human can refine them fast.</li>
-                </ul>
-              </article>
-              <article class="skill-card">
-                <p class="skill-card__label">Why it matters</p>
-                <h3>Starting is the hard part.</h3>
-                <ul class="skill-list">
-                  <li>Without a draft, most people never create the stable layer at all.</li>
-                  <li>With a draft, the job becomes editorial: keep, remove, sharpen, own.</li>
-                  <li>The result is a durable base any agent can read before acting.</li>
-                </ul>
-              </article>
-            </div>
+          <h2 id="workflow-title">How to begin.</h2>
+          <p>Drop the files into your project and populate them with relevant information.</p>
+          <p>Point your agent to the folder.</p>
+          <p>Audit the reasoning by simply opening the Markdown files.</p>
+          <div class="workflow-actions">
+            <a class="workflow-download" href="index.html">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.29a1 1 0 1 1 1.4 1.41l-4 3.99a1 1 0 0 1-1.4 0l-4-3.99a1 1 0 1 1 1.4-1.41L11 12.59V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"
+                />
+              </svg>
+              <span>Download the .zip</span>
+            </a>
+            <a class="workflow-link" href="examples.html">Examples →</a>
           </div>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="why-title">
-        <p class="section__label">Why This Shape</p>
-        <div class="section__body">
-          <h2 id="why-title">The memory model is the product.</h2>
-          <p>
-            Most memory systems optimize for automatic capture, latent inference, and silent consolidation. That feels
-            convenient until the stored memory is wrong, outdated, or impossible to inspect.
-          </p>
-          <p>
-            About Now Data takes the opposite position. Memory should be legible. Stable context and changing
-            context should never be mixed. Human control matters more than hidden cleverness.
-          </p>
-          <div class="principle">
-            <strong>Core rule</strong>
-            <p>Agents should read before they act.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--feature" aria-labelledby="agent-title">
-        <p class="section__label">Agent Use</p>
-        <div class="section__body section__body--wide">
-          <h2 id="agent-title">How an agent should use it.</h2>
           <div class="steps">
             <article class="step">
               <div class="step__index">1</div>
               <div>
-                <h3>Read <code>About</code> first</h3>
-                <p>Start with identity, values, rules, and boundaries so behavior is aligned before any action begins.</p>
+                <h3>Read <code>About.md</code> first</h3>
+                <p>Start with a structured map, identity, values, and boundaries. Ensure behavior is aligned before any action begins.</p>
               </div>
             </article>
             <article class="step">
               <div class="step__index">2</div>
               <div>
-                <h3>Act from <code>Now</code></h3>
-                <p>Use the current state to prioritize correctly and avoid acting from stale assumptions.</p>
+                <h3>Act from <code>Now.md</code></h3>
+                <p>Use the current state to prioritize correctly. Avoid acting on stale assumptions or outdated context.</p>
               </div>
             </article>
             <article class="step">
               <div class="step__index">3</div>
               <div>
                 <h3>Use <code>Data</code> for depth</h3>
-                <p>Pull project details, notes, references, and supporting structure only when needed.</p>
+                <p>Pull project details, notes, and references only when needed. Keep the "working memory" lean.</p>
               </div>
             </article>
             <article class="step">
               <div class="step__index">4</div>
               <div>
                 <h3>Write back explicitly</h3>
-                <p>When the system changes, update the relevant file instead of inventing hidden memory elsewhere.</p>
+                <p>When the system state changes, update the relevant file—manually or automatically via your agent. Never invent hidden memory or "hallucinate" context outside the Markdown structure.</p>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section section--feature" aria-labelledby="now-title">
-        <p class="section__label">Why Now</p>
-        <div class="section__body section__body--wide">
-          <h2 id="now-title">Model advances make the current layer easy to maintain.</h2>
+      <section class="section section--feature" aria-labelledby="comparison-title">
+        <p class="section__label">Comparison</p>
+        <div class="section__body section__body--wide section__body--airy">
+          <h2 id="comparison-title">The difference is where context lives.</h2>
           <p>
-            Thanks to recent improvements in the models themselves, refreshing <code>Now</code> is no longer the hard
-            part. An agent can help summarize recent activity, extract next steps, or rewrite the current state in a
-            few seconds, regardless of which model or ecosystem you use.
+            Most memory systems optimize for automatic capture, latent inference, and silent consolidation. That feels
+            convenient until the stored memory is wrong, outdated, or impossible to inspect.
           </p>
           <p>
-            That makes About Now Data more than a local note-taking format. It becomes a transversal agent memory:
-            one structure that different agents can read, update, and respect without depending on a single vendor or
-            product.
+            About Now Data takes the opposite position. Memory should be legible. Stable context and changing context
+            should never be mixed. Human control matters more than hidden cleverness.
           </p>
-          <div class="callout">
-            <p>
-              The risk is not that agents cannot update the system. The risk is that the human never keeps it alive.
-              The design goal is to make updating <code>Now</code> cheap enough that the system stays useful.
-            </p>
+          <div class="comparison-grid" aria-label="The usual setup versus About Now Data">
+            <article class="comparison-card">
+              <div class="comparison-card__head">
+                <p class="comparison-card__label">The Usual Setup</p>
+                <h3>Clutter and opacity</h3>
+              </div>
+              <div class="comparison-points">
+                <article class="comparison-point">
+                  <h4>Opaque and Fragmented</h4>
+                  <p>Context is often trapped in black-box databases, hidden chat histories, or proprietary software that humans can't easily audit.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Context Drift</h4>
+                  <p>Stable values and temporary tasks get mixed together, leading to "hallucinations" and agents that lose track of who they are representing.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Productivity Theater</h4>
+                  <p>Systems often prioritize complex automation and "completeness" over actual utility, creating a maintenance burden that feels like work instead of progress.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Memory as a file</h4>
+                  <p>Information is stored to preserve it, organized by type or date, and retrieved through search from a mostly static archive.</p>
+                </article>
+              </div>
+            </article>
+            <article class="comparison-card comparison-card--accent">
+              <div class="comparison-card__head">
+                <p class="comparison-card__label">With About Now Data</p>
+                <h3>Clarity and control</h3>
+              </div>
+              <div class="comparison-points">
+                <article class="comparison-point">
+                  <h4>A Minimal, Open and Portable Architecture</h4>
+                  <p>One About file, one Now file, and one Data folder. A universal structure that works anywhere Markdown does—no heavy software required.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Human-Centric Control</h4>
+                  <p>Auditability beats "black-box" convenience. You can see, edit, and move your memory at any time, ensuring you—not the algorithm—stay in charge.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Agentic Alignment by Design</h4>
+                  <p>By separating stable identity from current priorities, the system provides a clean foundation for agents to act with precision, without polluting your core context.</p>
+                </article>
+                <article class="comparison-point">
+                  <h4>Memory as a model</h4>
+                  <p>Information is stored to improve reasoning, organized around what an agent needs to know, and recalled through context-aware inference that evolves with each interaction.</p>
+                </article>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="section section--feature" aria-labelledby="now-skill-title">
-        <p class="section__label">Now Skill</p>
-        <div class="section__body section__body--wide">
-          <div class="skill-block">
-            <h2 id="now-skill-title">A skill to refresh <code>Now.md</code> from what actually changed this week.</h2>
-            <p>
-              The current layer should be cheap to update. A dedicated skill can review recent conversations,
-              tasks, project notes, and calendar signals, then rewrite <code>Now.md</code> so priorities, risks,
-              and next steps stay current without forcing the user to start from zero every time.
-            </p>
-            <div class="skill-grid">
-              <article class="skill-card">
-                <p class="skill-card__label">Reads from</p>
-                <h3>Recent activity and momentum.</h3>
-                <ul class="skill-list">
-                  <li>Last conversations, task lists, working notes, and recent project updates.</li>
-                  <li>Signals about what moved, what stalled, and what became urgent.</li>
-                  <li>Existing <code>Now.md</code> so continuity is preserved instead of reset.</li>
-                </ul>
-              </article>
-              <article class="skill-card skill-card--accent">
-                <p class="skill-card__label">Updates</p>
-                <h3>A current layer that stays operational.</h3>
-                <ul class="skill-list">
-                  <li>Top of mind, active projects, next steps, risks, and opportunities.</li>
-                  <li>Clear wording that reflects the latest state, not generic summaries.</li>
-                  <li>Minimal edits to keep the file light enough to maintain continuously.</li>
-                </ul>
-              </article>
-              <article class="skill-card">
-                <p class="skill-card__label">Why it matters</p>
-                <h3>If <code>Now</code> goes stale, the system drifts.</h3>
-                <ul class="skill-list">
-                  <li>The biggest failure mode is not complexity. It is neglect.</li>
-                  <li>When updates are cheap, the system remains useful across agents and tools.</li>
-                  <li>That is what turns the format into living context instead of archived notes.</li>
-                </ul>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--feature" aria-labelledby="adoption-title">
-        <p class="section__label">Adoption</p>
-        <div class="section__body section__body--wide">
-          <h2 id="adoption-title">Start smaller than you think.</h2>
+      <section class="section section--feature" aria-labelledby="future-title">
+        <p class="section__label">Future</p>
+        <div class="section__body section__body--wide section__body--airy">
+          <h2 id="future-title">Start Small, Adapt for an Agentic Future</h2>
           <p>
-            You do not need a perfect personal operating system to begin. A short <code>About.md</code>, a minimal
+            Thanks to recent model improvements, refreshing <code>Now.md</code> is no longer the hard part. An agent
+            can summarize recent activity, extract next steps, or rewrite your current state in seconds—regardless of
+            the ecosystem you use.
+          </p>
+          <p>
+            This makes About Now Data more than just a local format; it becomes a transversal agent memory. It is a
+            single structure that different agents can read, update, and respect without being locked into a single
+            vendor or product.
+          </p>
+          <p>
+            The real risk isn't that agents can't update the system—the risk is that the human stops keeping it alive.
+            Our design goal is to make updating <code>Now.md</code> "cheap" enough that the system remains
+            effortlessly useful.
+          </p>
+          <p>
+            You don't need a perfect personal operating system to begin. A short <code>About.md</code>, a minimal
             <code>Now.md</code>, and an empty <code>Data/</code> folder are enough.
           </p>
-          <p>
-            Keep <code>About</code> rare, keep <code>Now</code> easy, and let <code>Data</code> grow only where it
-            proves useful. The system should remain valuable even if there is no automation at all.
-          </p>
+          <p>The system remains valuable even with zero automation. It is built for the future, but owned by you.</p>
         </div>
       </section>
 
       <footer class="footer">
-        <a href="mailto:hello@aboutnowdata.com">hello@aboutnowdata.com</a>
+        <p class="footer__credit">Demanding a better clarity for the future | Lyzanor</p>
+        <div class="footer__social" aria-label="Links">
+          <a class="footer__social-link" href="mailto:lyzanor@gmail.com" aria-label="Email">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M3 5.75A2.75 2.75 0 0 1 5.75 3h12.5A2.75 2.75 0 0 1 21 5.75v12.5A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25V5.75Zm2.2-.25 6.8 5.44 6.8-5.44H5.2Zm14.3 1.28-6.87 5.49a1 1 0 0 1-1.25 0L4.5 6.78v11.47c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V6.78Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://github.com/Lyzanor/aboutnowdata" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.59 2 12.25c0 4.52 2.87 8.35 6.84 9.7.5.1.66-.22.66-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.2-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.1 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.31.1-2.74 0 0 .84-.28 2.75 1.06A9.3 9.3 0 0 1 12 6.93c.85 0 1.71.12 2.51.35 1.91-1.34 2.75-1.06 2.75-1.06.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.77 0 3.96-2.34 4.83-4.57 5.09.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.17.59.67.49A10.25 10.25 0 0 0 22 12.25C22 6.59 17.52 2 12 2Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://x.com/lyzanor" target="_blank" rel="noreferrer" aria-label="X">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M18.244 2H21l-6.02 6.88L22 22h-5.48l-4.3-7.91L5.3 22H2.54l6.44-7.37L2 2h5.62l3.89 7.26L18.244 2Zm-.97 18h1.53L6.8 3.9H5.16L17.274 20Z"
+              />
+            </svg>
+          </a>
+        </div>
       </footer>
     </main>
   </body>

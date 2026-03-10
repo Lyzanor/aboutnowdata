@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples | About Now Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Rethink+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050505'/%3E%3Cg fill='%23ffffff'%3E%3Crect x='9' y='18' width='4' height='28' rx='1'/%3E%3Crect x='17' y='18' width='4' height='28' rx='1'/%3E%3Crect x='5' y='24' width='20' height='4' rx='1'/%3E%3Crect x='5' y='36' width='20' height='4' rx='1'/%3E%3Crect x='28' y='18' width='4' height='28' rx='1'/%3E%3Crect x='36' y='18' width='4' height='28' rx='1'/%3E%3Crect x='24' y='24' width='20' height='4' rx='1'/%3E%3Crect x='24' y='36' width='20' height='4' rx='1'/%3E%3Crect x='47' y='20' width='12' height='24' rx='1.5'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      /* ── examples.html: page-specific styles ── */
+
+      .example-block {
+        display: grid;
+        gap: 1.6rem;
+      }
+
+      .example-intro {
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      .example-intro p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .file-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        padding: 1px;
+        overflow: hidden;
+        border-radius: calc(var(--radius) + 2px);
+        background: rgba(5, 5, 5, 0.14);
+      }
+
+      .file-card {
+        position: relative;
+        display: grid;
+        align-content: start;
+        gap: 0;
+        border: 0;
+        border-radius: 0;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--surface-soft));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: background-color 150ms var(--ease);
+      }
+
+      .file-card::before {
+        content: "";
+        position: absolute;
+        right: -2rem;
+        bottom: -2rem;
+        width: 10rem;
+        height: 10rem;
+        background-image: radial-gradient(circle, rgba(5, 5, 5, 0.12) 0.8px, transparent 0.8px);
+        background-size: 8px 8px;
+        opacity: 0.14;
+        pointer-events: none;
+      }
+
+      .file-card--about {
+        border-color: rgba(31, 122, 77, 0.22);
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.06), rgba(255, 255, 255, 0.96) 18%),
+          rgba(255, 255, 255, 0.98);
+      }
+
+      .file-card--now {
+        border-color: rgba(160, 82, 45, 0.18);
+        background:
+          linear-gradient(180deg, rgba(160, 82, 45, 0.07), rgba(255, 255, 255, 0.96) 20%),
+          rgba(255, 255, 255, 0.98);
+      }
+
+      .file-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .file-card__name {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .file-card--about .file-card__name {
+        color: var(--accent);
+      }
+
+      .file-card--now .file-card__name {
+        color: #a0522d;
+      }
+
+      .file-card__tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .file-card__body {
+        padding: 1rem 1.1rem 1.2rem;
+      }
+
+      .file-card pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: var(--font-mono);
+        font-size: 0.84rem;
+        line-height: 1.72;
+        color: var(--fg);
+      }
+
+      .file-card--data pre {
+        color: rgba(5, 5, 5, 0.62);
+      }
+
+      .md-h {
+        font-weight: 700;
+        color: var(--fg);
+      }
+
+      .file-card__body b {
+        font-weight: 700;
+        color: #6b3a2a;
+      }
+
+      .md-em {
+        font-style: italic;
+        color: #a0522d;
+      }
+
+      .md-link {
+        color: #7b3ba1;
+      }
+
+      .md-url {
+        color: #8b7355;
+      }
+
+      .footer {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 2rem 0 0.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .file-card:hover {
+        background: #ffffff;
+      }
+
+      .footer__social {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .footer__social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .footer__icon {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .footer__credit {
+        margin: 0;
+        color: var(--muted);
+        font-family: var(--font-sans);
+        font-size: 0.96rem;
+        letter-spacing: normal;
+        line-height: 1.5;
+        text-transform: none;
+      }
+
+      .examples-next {
+        display: flex;
+        justify-content: flex-start;
+        padding-top: 0.8rem;
+      }
+
+      .examples-next__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        padding: 1rem 1.35rem;
+        border: 1px solid rgba(31, 122, 77, 0.22);
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(31, 122, 77, 0.14), rgba(31, 122, 77, 0.08)),
+          rgba(255, 255, 255, 0.98);
+        color: var(--accent);
+        box-shadow: 0 16px 40px rgba(31, 122, 77, 0.12);
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .examples-next__link:hover,
+      .examples-next__link:focus-visible {
+        color: #ffffff;
+        border-color: rgba(31, 122, 77, 0.34);
+        background: linear-gradient(180deg, #1f7a4d, #17623d);
+        box-shadow: 0 22px 46px rgba(31, 122, 77, 0.2);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .section {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .file-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(calc(100% - 1.25rem), var(--content-width));
+          padding-top: 5rem;
+        }
+
+        .nav {
+          padding: 1rem 0.625rem;
+        }
+
+        .nav__brand,
+        .nav__link {
+          font-size: 0.78rem;
+        }
+
+        .nav__links {
+          gap: 1rem;
+        }
+
+        .panel-grid__row {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="index.html" aria-label="About Now Data">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="brand-mark__hash">##</span>
+          <span class="brand-mark__block"></span>
+        </span>
+        <span class="brand-text">About Now Data</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="learn.html">Explanation</a>
+        <a class="nav__link" href="index.html">Home</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="examples-title">
+        <div>
+          <p class="eyebrow">Examples</p>
+          <h1 id="examples-title">Three real bundles, filled in.</h1>
+          <p class="hero__lead">
+            A blank template is hard to start from. These examples show the same person using About Now Data for three
+            different scopes: personal identity, a YouTube channel, and a review project.
+          </p>
+          <div class="hero__summary">
+            <p>
+              Each example includes a complete <code>About.md</code>, <code>Now.md</code>, and <code>Data/</code>
+              structure. The content is fictional but realistic enough to copy, adapt, and make your own.
+            </p>
+            <p>
+              Notice how <code>About</code> stays stable across weeks, <code>Now</code> changes with every update,
+              and <code>Data</code> grows only where depth is needed.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero__panel">
+          <p class="quote">The best way to understand the system is to see it filled in.</p>
+          <dl class="panel-grid">
+            <div class="panel-grid__row">
+              <dt>Example 1</dt>
+              <dd>A car enthusiast's personal operating system.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Example 2</dt>
+              <dd>A YouTube channel about car culture and builds.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Example 3</dt>
+              <dd>A car review project with structured methodology.</dd>
+            </div>
+            <div class="panel-grid__row">
+              <dt>Pattern</dt>
+              <dd>Same framework, different scopes. The shape holds.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ─── EXAMPLE 1: Car Enthusiast ─── -->
+
+      <section class="section section--feature" aria-labelledby="example1-title">
+        <p class="section__label">Example 1 &mdash; Personal</p>
+        <div class="section__body section__body--wide">
+          <div class="example-block">
+            <div class="example-intro">
+              <h2 id="example1-title">Car enthusiast: personal identity.</h2>
+              <p>
+                Miguel uses About Now Data to keep his personal context organized. His <code>About</code> captures who
+                he is and how he thinks. His <code>Now</code> tracks what he's focused on this month. His
+                <code>Data</code> folder holds notes on cars, tools, and projects he can reference anytime.
+              </p>
+            </div>
+
+            <div class="file-grid">
+              <article class="file-card file-card--about">
+                <header class="file-card__header">
+                  <span class="file-card__name">About.md</span>
+                  <span class="file-card__tag">Stable</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># About - Miguel Reyes
+*Stable, defining, foundational.*
+*Last updated: 2026-01-12*
+
+## System
+**[About](./About.md)**: foundational context
+**[Now](./Now.md)**: current state
+**[Data](./Data/)**: details and projects
+- [Projects](./Data/Projects/)
+- [Notes](./Data/Notes.md)
+- [Tools](./Data/Tools.md)
+- [Skills](./Data/Skills.md)
+- [Cars](./Data/Cars-Owned-History.md)
+- [Suppliers](./Data/Suppliers/)
+
+## Identity
+- **About**: Car enthusiast since age 14. Started with a rusty Mk2 Golf in my uncle's garage. Now 31, based in Barcelona.
+- **Name**: Miguel Reyes
+- **Style**: Direct, slightly nerdy, no jargon unless talking to people who get it. Humor over formality.
+- **Interests**:
+  - Cars restoration.
+  - Video Photography.
+  - Any kind of cheese.
+
+## Direction
+**Values**:
+- Learning by doing.
+- Community over gatekeeping.
+- Slow builds over quick flips.
+**Goals**:
+- Finish the E30 project by summer.
+- Build a workshop space I actually enjoy spending time in.
+- Share more of the process publicly.
+**Rules**:
+- Buy the best tools I can afford once, not cheap ones twice.
+- Never rush a weld.
+- Keep the garage open to friends.
+**Boundaries**:
+- No sponsored content that I wouldn't personally recommend.
+- No builds purely for resale</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--now">
+                <header class="file-card__header">
+                  <span class="file-card__name">Now.md</span>
+                  <span class="file-card__tag">Current</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># Now
+*Brief, current, actionable.*
+*Last updated: 2026-03-02*
+
+## Status
+**Top of mind:**
+- E30 rear subframe is stripped and
+  ready for media blasting.
+- Waiting on Bilstein B14 kit delivery.
+**Active projects:** [BMW E30 325i restoration](Data/Projects/E30-325i), [Taller Abierto](Data/Projects/Taller-Abierto), [Reyes Reviews](Data/Projects/Reyes-Reviews)
+
+## Context
+**Recent activity:**
+- Sourced OEM tail lights from a
+  breaker in Munich.
+- Finished welding the spare wheel well.
+**Next steps:**
+- Schedule blasting for subframe.
+- Order brake lines and fittings.
+- Clear south wall for new tool board.
+**Risks:**
+- Budget is tight until April paycheck.
+- Weather delays if paint booth isn't
+  booked before rain season.
+**Opportunities:**
+- A friend offered access to a lift for
+  two weekends in March.
+- Garage shelving reorganization.</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--data">
+                <header class="file-card__header">
+                  <span class="file-card__name">Data/</span>
+                  <span class="file-card__tag">Knowledge</span>
+                </header>
+                <div class="file-card__body">
+                  <pre>Data/
+├── Projects/
+│   ├── E30-325i
+│   ├── Taller Abierto
+│   ├── Reyes Reviews
+│   └── Garage-Refit
+├── Notes.md
+│   (torque specs, paint codes,
+│    supplier contacts)
+├── Tools.md
+│   (inventory + wishlist)
+├── Skills.md
+├── Cars-Owned-History.md
+└── Suppliers/
+    ├── Parts-Germany.md
+    └── Local-Shops.md</pre>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── EXAMPLE 2: YouTube Channel ─── -->
+
+      <section class="section section--feature" aria-labelledby="example2-title">
+        <p class="section__label">Example 2 &mdash; Channel</p>
+        <div class="section__body section__body--wide">
+          <div class="example-block">
+            <div class="example-intro">
+              <h2 id="example2-title">YouTube channel: brand and content system.</h2>
+              <p>
+                Miguel also runs a YouTube channel. This is a separate About Now Data bundle because the channel has
+                its own identity, voice, goals, and rhythm. The <code>About</code> defines the brand. The
+                <code>Now</code> tracks the content pipeline. The <code>Data</code> folder holds episode plans,
+                analytics notes, and gear references.
+              </p>
+            </div>
+
+            <div class="file-grid">
+              <article class="file-card file-card--about">
+                <header class="file-card__header">
+                  <span class="file-card__name">About.md</span>
+                  <span class="file-card__tag">Stable</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># About - Taller Abierto
+*Stable, defining, foundational.*
+*Last updated: 2026-01-20*
+
+## System
+**[About](./About.md)**: foundational context
+**[Now](./Now.md)**: current state
+**[Data](./Data/)**: details and projects
+- [Episodes](./Data/Episodes/)
+- [Analytics](./Data/Analytics/)
+- [Gear](./Data/Gear.md)
+- [Workflow](./Data/Workflow.md)
+- [Patreon Plan](./Data/Patreon-plan.md)
+- [Brand](./Data/Brand/)
+
+## Identity
+- **About**: "Taller Abierto" is a YouTube channel about real garage life. No clickbait, no drama. Just honest builds, mistakes included.
+- **Name**: Taller Abierto (by Miguel Reyes)
+- **Style**: Conversational, unhurried. Talk to the camera like a friend is watching from the stool in the corner. Spanish with English subtitles.
+- **Interests**:
+  - Restoration Techniques.
+  - Sustainable Car Culture.
+  - YouTube Algorithm Shifts.
+
+## Direction
+**Values**:
+- Transparency over polish.
+- Respect the audience's time.
+- Honest documentation over polished performance.
+**Goals**:
+- Reach 10K subscribers by end of year.
+- Publish consistently: 2 videos/month.
+- Build a small Patreon community for extended build logs.
+**Rules**:
+- No fake enthusiasm. If a part is bad, say it.
+- Always credit sources and helpers.
+- Keep episodes under 18 minutes unless the build demands more.
+**Boundaries**:
+- No paid placements that compromise honest opinion.
+- No algorithm-chasing formats (shorts spam, engagement bait).</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--now">
+                <header class="file-card__header">
+                  <span class="file-card__name">Now.md</span>
+                  <span class="file-card__tag">Current</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># Now
+*Brief, current, actionable.*
+*Last updated: 2026-03-01*
+
+## Status
+**Top of mind:**
+- Episode 14 ("Subframe Strip &amp; Blast")
+  is filmed, needs editing and VO.
+- Thumbnail A/B test for Ep 13 showed
+  close-up angles perform 40% better.
+- E30 build series (episodes 12–18).
+
+## Context
+**Recent activity:**
+- Published Ep 13: "OEM Tail Lights
+  Hunt — Munich Trip."
+  (1.2K views in first week, 68 new
+  subscribers.)
+- Recorded B-roll of subframe teardown.
+**Next steps:**
+- Edit Ep 14 by March 8.
+- Script "Tool Basics #1: Angle
+  Grinders" outline.
+- Design Patreon launch page.
+**Risks:**
+- March schedule is packed — may slip
+  to 1 video this month.
+- Audio quality dropped in last shoot;
+  check lav mic connection.
+**Opportunities:**
+- Local car meet on March 15 could be
+  good community content.
+- Bilstein offered to send product for
+  honest review (no strings).</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--data">
+                <header class="file-card__header">
+                  <span class="file-card__name">Data/</span>
+                  <span class="file-card__tag">Knowledge</span>
+                </header>
+                <div class="file-card__body">
+                  <pre>Data/
+├── Episodes/
+│   ├── EP14-Subframe.md
+│   ├── EP13-Tail-Lights.md
+│   └── Ideas-Backlog.md
+├── Analytics/
+│   └── Monthly-Stats.md
+├── Gear.md
+│   (camera, mic, lighting setup)
+├── Workflow.md
+│   (shoot → edit → thumbnail →
+│    upload checklist)
+├── Patreon-Plan.md
+└── Brand/
+    ├── Intro-Outro-Script.md
+    └── Thumbnail-Style-Guide.md</pre>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── EXAMPLE 3: Car Reviews ─── -->
+
+      <section class="section section--feature" aria-labelledby="example3-title">
+        <p class="section__label">Example 3 &mdash; Project</p>
+        <div class="section__body section__body--wide">
+          <div class="example-block">
+            <div class="example-intro">
+              <h2 id="example3-title">Car reviews: structured methodology.</h2>
+              <p>
+                Beyond the channel, Miguel runs a standalone review project. This bundle captures how he thinks about
+                evaluating cars: criteria, scoring, editorial principles. Agents reading this <code>About</code>
+                can draft reviews that sound like him without guessing his standards.
+              </p>
+            </div>
+
+            <div class="file-grid">
+              <article class="file-card file-card--about">
+                <header class="file-card__header">
+                  <span class="file-card__name">About.md</span>
+                  <span class="file-card__tag">Stable</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># About - Reyes Reviews
+*Stable, defining, foundational.*
+*Last updated: 2026-02-05*
+
+## System
+**[About](./About.md)**: foundational context
+**[Now](./Now.md)**: current state
+**[Data](./Data/)**: details and projects
+- [Reviews](./Data/Reviews/)
+- [Scoring](./Data/Scoring/)
+- [Press Contacts](./Data/Press-Contacts.md)
+- [Photo Locations](./Data/Photo-Locations.md)
+- [Style Guide](./Data/Style-Guide.md)
+- [Pitches](./Data/Pitches/)
+
+## Identity
+- **About**: Independent car reviews focused on the driving experience, not spec sheets. Written for enthusiasts who care about how a car feels, not just what it costs.
+- **Name**: Reyes Reviews
+- **Style**: Opinionated but fair. First person. Short paragraphs. Comparisons over absolutes ("better than X" not "the best").
+- **Interests**:
+  - Driving feel over spec-sheet obsession.
+  - Segment-aware comparisons.
+  - Honest reviews over privileged access.
+
+## Direction
+**Values**:
+- Honesty over access. Losing a press car is better than lying about it.
+- Context matters: always compare within segment and price.
+- Clear judgment over vague neutrality.
+**Goals**:
+- Publish 2 reviews per month.
+- Build a scoring archive that readers can filter and compare.
+- Get invited to one international press event this year.
+**Rules**:
+- Always drive the car for at least 3 full days before writing.
+- Score on 5 axes: drive, comfort, design, value, character.
+- Disclose every conflict of interest.
+**Boundaries**:
+- No reviews of cars I haven't driven personally.
+- No star ratings; use the 5-axis radar only.
+- No manufacturer final-draft approval</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--now">
+                <header class="file-card__header">
+                  <span class="file-card__name">Now.md</span>
+                  <span class="file-card__tag">Current</span>
+                </header>
+                <div class="file-card__body">
+                  <pre># Now
+*Brief, current, actionable.*
+*Last updated: 2026-03-03*
+
+## Status
+**Top of mind:**
+- Mazda MX-5 ND review is in draft.
+  Drove it for 5 days, notes are done.
+- Toyota GR86 review published last
+  week — best engagement so far (2.4K
+  reads, 38 comments).
+
+## Context
+**Recent activity:**
+- Returned MX-5 press car on Feb 28.
+- Photographed 42 images across 3
+  locations (coast road, mountain pass,
+  city center).
+- Drafted intro and driving section.
+**Next steps:**
+- Finish MX-5 comfort + value sections.
+- Migrate GR86 and Civic Type R scores
+  into the archive sheet.
+- Pitch Renault Espana for Alpine A110
+  press loan.
+**Risks:**
+- MX-5 review may overlap with channel
+  editing week — time conflict.
+- Photo quality on mountain pass shots
+  was affected by fog.
+**Opportunities:**
+- A local dealer offered early access
+  to the new Civic RS for review.
+- Could cross-post reviews to the
+  channel as short companion videos.</pre>
+                </div>
+              </article>
+
+              <article class="file-card file-card--data">
+                <header class="file-card__header">
+                  <span class="file-card__name">Data/</span>
+                  <span class="file-card__tag">Knowledge</span>
+                </header>
+                <div class="file-card__body">
+                  <pre>Data/
+├── Reviews/
+│   ├── MX5-ND-2025.md
+│   ├── GR86-2024.md
+│   ├── Civic-Type-R-2024.md
+│   └── Template-Review.md
+├── Scoring/
+│   ├── Archive.csv
+│   └── Methodology.md
+├── Press-Contacts.md
+├── Photo-Locations.md
+│   (GPS pins + best light times)
+├── Style-Guide.md
+│   (review structure, tone rules,
+│    word-count targets)
+└── Pitches/
+    └── Alpine-A110-Pitch.md</pre>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Closing ─── -->
+
+      <section class="section" aria-labelledby="takeaway-title">
+        <p class="section__label">Takeaway</p>
+        <div class="section__body">
+          <h2 id="takeaway-title">Same structure, different scopes.</h2>
+          <p>
+            The three examples above are different in content but identical in shape. That is the point. Whether the
+            scope is a person, a brand, or a project, the framework works the same way: stable identity in
+            <code>About</code>, current state in <code>Now</code>, structured depth in <code>Data</code>.
+          </p>
+          <p>
+            Pick the scope that matters most to you and start there. One bundle is enough. You can always add another
+            when a new project or identity needs its own context.
+          </p>
+          <div class="examples-next">
+            <a class="examples-next__link" href="learn.html">Go to Explanation →</a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p class="footer__credit">Demanding a better clarity for the future | Lyzanor</p>
+        <div class="footer__social" aria-label="Links">
+          <a class="footer__social-link" href="mailto:lyzanor@gmail.com" aria-label="Email">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M3 5.75A2.75 2.75 0 0 1 5.75 3h12.5A2.75 2.75 0 0 1 21 5.75v12.5A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25V5.75Zm2.2-.25 6.8 5.44 6.8-5.44H5.2Zm14.3 1.28-6.87 5.49a1 1 0 0 1-1.25 0L4.5 6.78v11.47c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V6.78Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://github.com/Lyzanor/aboutnowdata" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.59 2 12.25c0 4.52 2.87 8.35 6.84 9.7.5.1.66-.22.66-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.2-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.1 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.31.1-2.74 0 0 .84-.28 2.75 1.06A9.3 9.3 0 0 1 12 6.93c.85 0 1.71.12 2.51.35 1.91-1.34 2.75-1.06 2.75-1.06.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.77 0 3.96-2.34 4.83-4.57 5.09.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.17.59.67.49A10.25 10.25 0 0 0 22 12.25C22 6.59 17.52 2 12 2Z"
+              />
+            </svg>
+          </a>
+          <a class="footer__social-link" href="https://x.com/lyzanor" target="_blank" rel="noreferrer" aria-label="X">
+            <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M18.244 2H21l-6.02 6.88L22 22h-5.48l-4.3-7.91L5.3 22H2.54l6.44-7.37L2 2h5.62l3.89 7.26L18.244 2Zm-.97 18h1.53L6.8 3.9H5.16L17.274 20Z"
+              />
+            </svg>
+          </a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      function highlightMarkdown(text) {
+        let html = text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        html = html.replace(/^(#{1,6}\s.*)$/gm, '<span class="md-h">$1</span>');
+        html = html.replace(
+          /\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/g,
+          '<b>**[<span class="md-link">$1</span>](<span class="md-url">$2</span>)**</b>'
+        );
+        html = html.replace(/\*\*([^*]+?)\*\*/g, "<b>**$1**</b>");
+        html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em class="md-em">*$1*</em>');
+
+        return html;
+      }
+
+      document.querySelectorAll(".file-card pre").forEach((block) => {
+        block.innerHTML = highlightMarkdown(block.textContent);
+      });
+    </script>
+  </body>
+</html>
